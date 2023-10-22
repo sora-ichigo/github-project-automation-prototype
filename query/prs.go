@@ -86,7 +86,8 @@ func searchDraftPRsCommand() ([]byte, error) {
 	return output, err
 }
 
-// Search query: - owner: wantedly
+// Search query:
+// - owner: wantedly
 // - assignee: @me
 // - state: open
 // - review: changes_requested
