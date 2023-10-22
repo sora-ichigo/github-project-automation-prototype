@@ -1,3 +1,5 @@
+//go:generate mockgen -source=projectv2.go -destination=mock/projectv2_mock.go -package=mock
+
 package usecase
 
 // ProjectItem is a struct that represents a project item.
