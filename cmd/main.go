@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	projectV2Setter := query.NewProjectV2Setter()
+	projectV2Setter := command.NewProjectV2Setter()
 	issueFetcher := query.NewIssueFetcher()
 	automations := []domain.Automation{
 		command.NewIssueAssignedToMeAutomation(issueFetcher, projectV2Setter),
