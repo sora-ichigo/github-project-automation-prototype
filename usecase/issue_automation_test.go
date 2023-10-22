@@ -8,7 +8,7 @@ import (
 	gomock "go.uber.org/mock/gomock"
 )
 
-func TestIssueAssignedToMeAutomationImpl_MyIssues(t *testing.T) {
+func TestIssueAutomation(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -26,7 +26,7 @@ func TestIssueAssignedToMeAutomationImpl_MyIssues(t *testing.T) {
 	mockProjectV2Setter.EXPECT().Set(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks
-	automation := usecase.NewIssueAssignedToMeAutomation(mockIssueFetcher, mockProjectV2Setter)
+	automation := usecase.NewIssueAutomation(mockIssueFetcher, mockProjectV2Setter)
 
 	// Execute the method
 	err := automation.SetInProgress()

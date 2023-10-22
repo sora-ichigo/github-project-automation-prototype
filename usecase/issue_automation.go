@@ -5,20 +5,20 @@ import (
 	"github.com/igsr5/github-project-automation/domain"
 )
 
-type issueAssignedToMeAutomationImpl struct {
+type issueAutomationImpl struct {
 	issuefetcher    IssueFetcher
 	projectV2Setter ProjectV2Setter
 }
 
-// NewIssueAssignedToMeAutomation is a factory method to create a new instance of IssueAssignedToMeAutomation.
-func NewIssueAssignedToMeAutomation(issueFetcher IssueFetcher, projectV2Setter ProjectV2Setter) domain.IssueAssignedToMeAutomation {
-	return &issueAssignedToMeAutomationImpl{
+// NewIssueAutomation is a factory method to create a new instance of IssueAutomation.
+func NewIssueAutomation(issueFetcher IssueFetcher, projectV2Setter ProjectV2Setter) domain.IssueAutomation {
+	return &issueAutomationImpl{
 		issuefetcher:    issueFetcher,
 		projectV2Setter: projectV2Setter,
 	}
 }
 
-func (a *issueAssignedToMeAutomationImpl) SetInProgress() error {
+func (a *issueAutomationImpl) SetInProgress() error {
 	issues, err := a.issuefetcher.MyIssues()
 	if err != nil {
 		return err
@@ -37,11 +37,11 @@ func (a *issueAssignedToMeAutomationImpl) SetInProgress() error {
 }
 
 // this status is not used, so do nothing
-func (a *issueAssignedToMeAutomationImpl) SetInPending() error {
+func (a *issueAutomationImpl) SetInPending() error {
 	return nil
 }
 
 // this status is not used, so do nothing
-func (a *issueAssignedToMeAutomationImpl) SetComplete() error {
+func (a *issueAutomationImpl) SetComplete() error {
 	return nil
 }

@@ -14,7 +14,7 @@ func main() {
 	projectV2Setter := command.NewProjectV2Setter()
 	issueFetcher := query.NewIssueFetcher()
 	automations := []domain.Automation{
-		usecase.NewIssueAssignedToMeAutomation(issueFetcher, projectV2Setter),
+		usecase.NewIssueAutomation(issueFetcher, projectV2Setter),
 		usecase.NewPrAssignedToMeAutomation(),
 		usecase.NewPrAssignedToReviewerAutomation(),
 	}

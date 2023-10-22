@@ -7,8 +7,8 @@ type Automation interface {
 	SetComplete() error
 }
 
-// IssueAssignedToMeAutomation is an interface for automations that are triggered when an issue is assigned to me.
-type IssueAssignedToMeAutomation interface {
+// IssueAutomation is an interface for automations that are triggered when an issue is assigned to me.
+type IssueAutomation interface {
 	Automation
 }
 
