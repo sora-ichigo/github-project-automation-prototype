@@ -53,7 +53,7 @@ func (s *projectV2SetterImpl) Set(categoryID string, statusID string, projectIte
 }
 
 func addProjectItem(url string) (*Item, error) {
-	cmd := exec.Command("gh", "project", "item-add", variables.PROJECT_ID, "--owner", "wantedly", "--url", url, "--format", "json")
+	cmd := exec.Command("gh", "project", "item-add", variables.PROJECT_NUMBER, "--owner", "wantedly", "--url", url, "--format", "json")
 	output, err := cmd.Output()
 	if err != nil {
 		return nil, errors.Join(err)
@@ -68,11 +68,21 @@ func addProjectItem(url string) (*Item, error) {
 }
 
 func moveStatusProjectItem(item Item, statusID string) error {
-	// TODO: implement
+	cmd := exec.Command("gh", "project", "item-edit", "--id", item.ID, "--field-id", variables.STATUS_FIELD_ID, "--project-id", variables.PROJECT_ID, "--single-select-option-id", statusID)
+	_, err := cmd.Output()
+	if err != nil {
+		return errors.Join(err)
+	}
+
 	return nil
 }
 
 func moveCategoryProjectItem(item Item, categoryID string) error {
-	// TODO: implement
+	cmd := exec.Command("gh", "project", "item-edit", "--id", item.ID, "--field-id", variables.CATEGORY_FIELD_ID, "--project-id", variables.PROJECT_ID, "--single-select-option-id", categoryID)
+	_, err := cmd.Output()
+	if err != nil {
+		return errors.Join(err)
+	}
+
 	return nil
 }

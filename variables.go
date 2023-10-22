@@ -10,8 +10,11 @@ var (
 )
 
 var (
-	// PROJECT_ID is a project id.
-	PROJECT_ID = "227"
+	// PROJECT_NUMBER is a project number.
+	PROJECT_NUMBER    = "227"
+	PROJECT_ID        = "PVT_kwDOAA-3pc4AXKq0"
+	STATUS_FIELD_ID   = "PVTSSF_lADOAA-3pc4AXKq0zgOzsQI"
+	CATEGORY_FIELD_ID = "PVTSSF_lADOAA-3pc4AXKq0zgOzshg"
 )
 
 var (
