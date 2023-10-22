@@ -1,10 +1,10 @@
-package command
+package usecase_test
 
 import (
 	"testing"
 
-	"github.com/igsr5/github-project-automation/domain"
-	mock_domain "github.com/igsr5/github-project-automation/domain/mock"
+	usecase "github.com/igsr5/github-project-automation/usecase"
+	mock_usecase "github.com/igsr5/github-project-automation/usecase/mock"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -13,11 +13,11 @@ func TestIssueAssignedToMeAutomationImpl_MyIssues(t *testing.T) {
 	defer ctrl.Finish()
 
 	// Mocks
-	mockIssueFetcher := mock_domain.NewMockIssueFetcher(ctrl)
-	mockProjectV2Setter := mock_domain.NewMockProjectV2Setter(ctrl)
+	mockIssueFetcher := mock_usecase.NewMockIssueFetcher(ctrl)
+	mockProjectV2Setter := mock_usecase.NewMockProjectV2Setter(ctrl)
 
 	// Expected data
-	expectedIssues := []domain.Issue{
+	expectedIssues := []usecase.Issue{
 		{Url: "https://github.com/wantedly/wantedly/issue/1234"},
 	}
 
@@ -26,7 +26,7 @@ func TestIssueAssignedToMeAutomationImpl_MyIssues(t *testing.T) {
 	mockProjectV2Setter.EXPECT().Set(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks
-	automation := NewIssueAssignedToMeAutomation(mockIssueFetcher, mockProjectV2Setter)
+	automation := usecase.NewIssueAssignedToMeAutomation(mockIssueFetcher, mockProjectV2Setter)
 
 	// Execute the method
 	err := automation.SetInProgress()

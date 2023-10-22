@@ -1,4 +1,4 @@
-package command
+package usecase
 
 import "github.com/igsr5/github-project-automation/domain"
 

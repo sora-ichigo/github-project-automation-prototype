@@ -1,4 +1,4 @@
-package domain
+package usecase
 
 // ProjectItem is a struct that represents a project item.
 type ProjectItem struct {

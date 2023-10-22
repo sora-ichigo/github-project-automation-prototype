@@ -1,12 +1,15 @@
 package query
 
-import "github.com/igsr5/github-project-automation/domain"
+import (
+	"github.com/igsr5/github-project-automation/domain"
+	"github.com/igsr5/github-project-automation/usecase"
+)
 
 type issueFetcherImpl struct {
 }
 
 // NewIssueFetcher is a factory method to create a new instance of IssueFetcher.
-func NewIssueFetcher() domain.IssueFetcher {
+func NewIssueFetcher() usecase.IssueFetcher {
 	return &issueFetcherImpl{}
 }
 

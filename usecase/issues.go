@@ -1,4 +1,4 @@
-package domain
+package usecase
 
 // Issue is a struct for an issue.
 type Issue struct {

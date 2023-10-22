@@ -7,15 +7,16 @@ import (
 	"github.com/igsr5/github-project-automation/command"
 	"github.com/igsr5/github-project-automation/domain"
 	"github.com/igsr5/github-project-automation/query"
+	"github.com/igsr5/github-project-automation/usecase"
 )
 
 func main() {
 	projectV2Setter := command.NewProjectV2Setter()
 	issueFetcher := query.NewIssueFetcher()
 	automations := []domain.Automation{
-		command.NewIssueAssignedToMeAutomation(issueFetcher, projectV2Setter),
-		command.NewPrAssignedToMeAutomation(),
-		command.NewPrAssignedToReviewerAutomation(),
+		usecase.NewIssueAssignedToMeAutomation(issueFetcher, projectV2Setter),
+		usecase.NewPrAssignedToMeAutomation(),
+		usecase.NewPrAssignedToReviewerAutomation(),
 	}
 
 	for _, a := range automations {
