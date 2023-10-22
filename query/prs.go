@@ -30,9 +30,9 @@ func (f *prFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
 	return prs, nil
 }
 
-// ReviewRequestedPrs returns a list of pull requests that are requested to review.
-func (f *prFetcherImpl) CommentedPrs() ([]usecase.PullRequest, error) {
-	b, err := searchReviewRequestedPRsCommand()
+// ChangesRequestedPrs returns a list of pull requests that are requested to change.
+func (f *prFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
+	b, err := searchChangeRequestedPRsCommand()
 	if err != nil {
 		return nil, errors.Join(err)
 	}
@@ -45,8 +45,8 @@ func (f *prFetcherImpl) CommentedPrs() ([]usecase.PullRequest, error) {
 	return prs, nil
 }
 
-// ChangesRequestedPrs returns a list of pull requests that are requested to change.
-func (f *prFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
+// ReviewRequestedPrs returns a list of pull requests that are requested to review.
+func (f *prFetcherImpl) ReviewRequestedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchReviewRequestedPRsCommand()
 	if err != nil {
 		return nil, errors.Join(err)
@@ -80,6 +80,16 @@ func (f *prFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 // - assignee: @me
 // - state: open
 func searchUnReviewRequestedPRsCommand() ([]byte, error) {
+	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--review", "none", "--limit", "100", "--json", "url")
+	output, err := cmd.Output()
+	return output, err
+}
+
+// Search query:
+// - owner: wantedly
+// - assignee: @me
+// - state: open
+func searchChangeRequestedPRsCommand() ([]byte, error) {
 	// TODO: Implement
 	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
@@ -92,7 +102,7 @@ func searchUnReviewRequestedPRsCommand() ([]byte, error) {
 // - state: open
 func searchReviewRequestedPRsCommand() ([]byte, error) {
 	// TODO: Implement
-	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--limit", "100", "--json", "url")
+	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--review", "changes_requested", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
 	return output, err
 }
