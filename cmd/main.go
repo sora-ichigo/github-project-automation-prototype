@@ -16,7 +16,7 @@ func main() {
 	automations := []domain.Automation{
 		usecase.NewIssueAutomation(issueFetcher, projectV2Setter),
 		usecase.NewPrAutomation(),
-		usecase.NewPrAssignedToReviewerAutomation(),
+		usecase.NewReviewPrAutomation(),
 	}
 
 	for _, a := range automations {

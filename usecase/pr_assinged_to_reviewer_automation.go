@@ -2,24 +2,24 @@ package usecase
 
 import "github.com/igsr5/github-project-automation/domain"
 
-type prAssignedToReviewerAutomationImpl struct{}
+type reviewPrAutomation struct{}
 
-// NewPrAssignedToReviewerAutomation is a factory method to create a new instance of PrAssignedToReviewerAutomation.
-func NewPrAssignedToReviewerAutomation() domain.PrAssignedToReviewerAutomation {
-	return &prAssignedToReviewerAutomationImpl{}
+// NewReviewPrAutomation is a factory method to create a new instance of ReviewPrAutomation.
+func NewReviewPrAutomation() domain.ReviewPrAutomation {
+	return &reviewPrAutomation{}
 }
 
-func (a *prAssignedToReviewerAutomationImpl) SetInProgress() error {
+func (a *reviewPrAutomation) SetInProgress() error {
 	// TODO: Implement
 	return nil
 }
 
-func (a *prAssignedToReviewerAutomationImpl) SetInPending() error {
+func (a *reviewPrAutomation) SetInPending() error {
 	// TODO: Implement
 	return nil
 }
 
-func (a *prAssignedToReviewerAutomationImpl) SetComplete() error {
+func (a *reviewPrAutomation) SetComplete() error {
 	// TODO: Implement
 	return nil
 }

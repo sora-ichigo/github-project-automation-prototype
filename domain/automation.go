@@ -17,7 +17,7 @@ type PrAutomation interface {
 	Automation
 }
 
-// PrAssignedToReviewerAutomation is an interface for automations that are triggered when a PR is assigned to a reviewer.
-type PrAssignedToReviewerAutomation interface {
+// ReviewPrAutomation is an interface for automations that are triggered when a PR is assigned to a reviewer.
+type ReviewPrAutomation interface {
 	Automation
 }
