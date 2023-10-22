@@ -1,19 +1,31 @@
 package main
 
-import "fmt"
+import (
+	"log"
+	"os"
+)
 
 func main() {
-	fmt.Printf("Hello World!")
+	automations := []Automation{
+		NewIssueAssignedToMeAutomation(),
+		NewPrAssignedToMeAutomation(),
+		NewPrAssignedToReviewerAutomation(),
+	}
 
-	// 1. ① の in progress に該当する issue を fetch
-	// 2. 1 を project にセット
+	for _, a := range automations {
+		if err := a.setInPending(); err != nil {
+			log.Printf("error occurred: %v", err)
+			os.Exit(1)
+		}
 
-	// 1. ② の in progress に該当する issue を fetch
-	// 2. 1 を project にセット
+		if err := a.setInPending(); err != nil {
+			log.Printf("error occurred: %v", err)
+			os.Exit(1)
+		}
 
-	// 1. ② の in pending に該当する issue を fetch
-	// 2. 1 を project にセット
-
-	// 1. ② の complete に該当する issue を fetch
-	// 2. 1 を project にセット
+		if err := a.setComplete(); err != nil {
+			log.Printf("error occurred: %v", err)
+			os.Exit(1)
+		}
+	}
 }

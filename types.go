@@ -10,10 +10,10 @@ type IssueAssignedToMeAutomation interface {
 	Automation
 }
 
-type PRAssignedToMeAutomation interface {
+type PrAssignedToMeAutomation interface {
 	Automation
 }
 
-type PRAssignedToReviewerAutomation interface {
+type PrAssignedToReviewerAutomation interface {
 	Automation
 }
