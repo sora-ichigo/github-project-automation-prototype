@@ -18,6 +18,7 @@ func NewPrAutomation(prFetcher PrFetcher, projectV2Setter ProjectV2Setter) domai
 	}
 }
 
+// SetInProgress sets pull requests that are in progress.
 func (a *prAutomationImpl) SetInProgress() error {
 	prs, err := a.prFetcher.WorkInProgressPrs()
 	if err != nil {
@@ -36,6 +37,7 @@ func (a *prAutomationImpl) SetInProgress() error {
 	return nil
 }
 
+// SetInPending sets pull requests that are requested to review.
 func (a *prAutomationImpl) SetInPending() error {
 	prs, err := a.prFetcher.ReviewRequestedPrs()
 	if err != nil {
@@ -54,6 +56,7 @@ func (a *prAutomationImpl) SetInPending() error {
 	return nil
 }
 
+// SetComplete sets pull requests that are approved.
 func (a *prAutomationImpl) SetComplete() error {
 	prs, err := a.prFetcher.ApprovedPrs()
 	if err != nil {
