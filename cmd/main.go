@@ -13,9 +13,10 @@ import (
 func main() {
 	projectV2Setter := command.NewProjectV2Setter()
 	issueFetcher := query.NewIssueFetcher()
+	prFetcher := query.NewPrFetcher()
 	automations := []domain.Automation{
 		usecase.NewIssueAutomation(issueFetcher, projectV2Setter),
-		usecase.NewPrAutomation(),
+		usecase.NewPrAutomation(prFetcher, projectV2Setter),
 		usecase.NewReviewPrAutomation(),
 	}
 

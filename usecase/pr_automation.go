@@ -3,11 +3,16 @@ package usecase
 import "github.com/igsr5/github-project-automation/domain"
 
 type prAutomationImpl struct {
+	prFetcher       PrFetcher
+	projectV2Setter ProjectV2Setter
 }
 
 // NewPrAutomation is a factory method to create a new instance of PrAutomation.
-func NewPrAutomation() domain.PrAutomation {
-	return &prAutomationImpl{}
+func NewPrAutomation(prFetcher PrFetcher, projectV2Setter ProjectV2Setter) domain.PrAutomation {
+	return &prAutomationImpl{
+		prFetcher:       prFetcher,
+		projectV2Setter: projectV2Setter,
+	}
 }
 
 func (a *prAutomationImpl) SetInProgress() error {
