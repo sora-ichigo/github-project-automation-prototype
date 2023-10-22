@@ -1,9 +1,9 @@
-package main
+package domain
 
 type Automation interface {
-	setInProgress() error
-	setInPending() error
-	setComplete() error
+	SetInProgress() error
+	SetInPending() error
+	SetComplete() error
 }
 
 // IssueAssignedToMeAutomation is an interface for automations that are triggered when an issue is assigned to me.

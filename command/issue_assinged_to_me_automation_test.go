@@ -1,10 +1,11 @@
-package main
+package command
 
 import (
 	"testing"
 
-	"github.com/golang/mock/gomock"
-	mock_main "github.com/igsr5/github-project-automation/mock"
+	"github.com/igsr5/github-project-automation/domain"
+	mock_domain "github.com/igsr5/github-project-automation/domain/mock"
+	gomock "go.uber.org/mock/gomock"
 )
 
 func TestIssueAssignedToMeAutomationImpl_MyIssues(t *testing.T) {
@@ -12,11 +13,11 @@ func TestIssueAssignedToMeAutomationImpl_MyIssues(t *testing.T) {
 	defer ctrl.Finish()
 
 	// Mocks
-	mockIssueFetcher := mock_main.MockIssueFetcher(ctrl)
-	mockProjectV2Setter := mock_main.MockProjectV2Setter(ctrl)
+	mockIssueFetcher := mock_domain.NewMockIssueFetcher(ctrl)
+	mockProjectV2Setter := mock_domain.NewMockProjectV2Setter(ctrl)
 
 	// Expected data
-	expectedIssues := []Issue{
+	expectedIssues := []domain.Issue{
 		{Url: "https://github.com/wantedly/wantedly/issue/1234"},
 	}
 
@@ -28,7 +29,7 @@ func TestIssueAssignedToMeAutomationImpl_MyIssues(t *testing.T) {
 	automation := NewIssueAssignedToMeAutomation(mockIssueFetcher, mockProjectV2Setter)
 
 	// Execute the method
-	err := automation.setInProgress()
+	err := automation.SetInProgress()
 
 	// Validate
 	if err != nil {
