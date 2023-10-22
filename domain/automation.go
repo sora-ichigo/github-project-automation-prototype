@@ -1,5 +1,6 @@
 package domain
 
+// Automation is an interface for automations.
 type Automation interface {
 	SetInProgress() error
 	SetInPending() error

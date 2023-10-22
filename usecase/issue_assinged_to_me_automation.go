@@ -24,15 +24,15 @@ func (a *issueAssignedToMeAutomationImpl) SetInProgress() error {
 		return err
 	}
 
-	categoryId := variables.ISSUE_CATEGORY_ID
-	statusId := variables.IN_PROGRESS_STATUS_ID
+	categoryID := variables.ISSUE_CATEGORY_ID
+	statusID := variables.IN_PROGRESS_STATUS_ID
 
 	projectItems := make([]ProjectItem, 0, len(issues))
 	for _, i := range issues {
 		projectItems = append(projectItems, ProjectItem{URL: i.URL})
 	}
 
-	a.projectV2Setter.Set(categoryId, statusId, projectItems)
+	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }
 

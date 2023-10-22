@@ -13,7 +13,7 @@ func NewProjectV2Setter() usecase.ProjectV2Setter {
 }
 
 // Set sets project items.
-func (s *projectV2SetterImpl) Set(categoryId string, statusId string, projectItems []usecase.ProjectItem) error {
+func (s *projectV2SetterImpl) Set(categoryID string, statusID string, projectItems []usecase.ProjectItem) error {
 	// TODO: Implement
 	return nil
 }
