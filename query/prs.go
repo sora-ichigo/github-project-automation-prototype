@@ -11,6 +11,7 @@ func NewPrFetcher() usecase.PrFetcher {
 
 // WorkInProgressPrs returns a list of pull requests that are in progress.
 func (f *prFetcherImpl) WorkInProgressPrs() ([]usecase.PullRequest, error) {
+	// TODO: Implement
 	prs := []usecase.PullRequest{
 		{
 			URL: "",
@@ -22,6 +23,7 @@ func (f *prFetcherImpl) WorkInProgressPrs() ([]usecase.PullRequest, error) {
 
 // ReviewRequestedPrs returns a list of pull requests that are requested to review.
 func (f *prFetcherImpl) ReviewRequestedPrs() ([]usecase.PullRequest, error) {
+	// TODO: Implement
 	prs := []usecase.PullRequest{
 		{
 			URL: "",
@@ -33,6 +35,7 @@ func (f *prFetcherImpl) ReviewRequestedPrs() ([]usecase.PullRequest, error) {
 
 // ApprovedPrs returns a list of pull requests that are approved.
 func (f *prFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
+	// TODO: Implement
 	prs := []usecase.PullRequest{
 		{
 			URL: "",
