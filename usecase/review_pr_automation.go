@@ -1,6 +1,11 @@
 package usecase
 
-import "github.com/igsr5/github-project-automation/domain"
+import (
+	"errors"
+
+	variables "github.com/igsr5/github-project-automation"
+	"github.com/igsr5/github-project-automation/domain"
+)
 
 type reviewPrAutomation struct {
 	reviewPrFetcher ReviewPrFetcher
@@ -16,16 +21,63 @@ func NewReviewPrAutomation(reviewPrFetcher ReviewPrFetcher, projectV2Setter Proj
 }
 
 func (a *reviewPrAutomation) SetInProgress() error {
-	// TODO: Implement
+	prs, err := a.reviewPrFetcher.UnReviewedPrs()
+	if err != nil {
+		return errors.Join(err)
+	}
+
+	categoryID := variables.REVIEW_PR_CATEGORY_ID
+	statusID := variables.IN_PROGRESS_STATUS_ID
+
+	projectItems := make([]ProjectItem, 0, len(prs))
+	for _, i := range prs {
+		projectItems = append(projectItems, ProjectItem{URL: i.URL})
+	}
+
+	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }
 
 func (a *reviewPrAutomation) SetInPending() error {
-	// TODO: Implement
+	commentedPrs, err := a.reviewPrFetcher.CommentedPrs()
+	if err != nil {
+		return errors.Join(err)
+	}
+
+	changesRequestedPrs, err := a.reviewPrFetcher.ChangesRequestedPrs()
+	if err != nil {
+		return errors.Join(err)
+	}
+
+	prs := append(commentedPrs, changesRequestedPrs...)
+
+	categoryID := variables.REVIEW_PR_CATEGORY_ID
+	statusID := variables.IN_PENDING_STATUS_ID
+
+	projectItems := make([]ProjectItem, 0, len(prs))
+	for _, i := range prs {
+		projectItems = append(projectItems, ProjectItem{URL: i.URL})
+	}
+
+	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }
 
 func (a *reviewPrAutomation) SetComplete() error {
-	// TODO: Implement
+	prs, err := a.reviewPrFetcher.ApprovedPrs()
+	if err != nil {
+		return errors.Join(err)
+	}
+
+	categoryID := variables.REVIEW_PR_CATEGORY_ID
+	statusID := variables.COMPLETE_STATUS_ID
+
+	projectItems := make([]ProjectItem, 0, len(prs))
+	for _, i := range prs {
+		projectItems = append(projectItems, ProjectItem{URL: i.URL})
+	}
+
+	a.projectV2Setter.Set(categoryID, statusID, projectItems)
+
 	return nil
 }
