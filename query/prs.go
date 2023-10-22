@@ -17,7 +17,7 @@ func NewPrFetcher() usecase.PrFetcher {
 
 // UnReviewedPrs returns a list of pull requests that are not reviewed.
 func (f *prFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
-	b, err := searchUnReviewRequestedPRsCommand()
+	b, err := searchDraftPRsCommand()
 	if err != nil {
 		return nil, errors.Join(err)
 	}
@@ -79,35 +79,36 @@ func (f *prFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 // - owner: wantedly
 // - assignee: @me
 // - state: open
-func searchUnReviewRequestedPRsCommand() ([]byte, error) {
-	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--review", "none", "--limit", "100", "--json", "url")
+// - draft: 1
+func searchDraftPRsCommand() ([]byte, error) {
+	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--draft", "1", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
 	return output, err
 }
 
-// Search query:
-// - owner: wantedly
+// Search query: - owner: wantedly
 // - assignee: @me
 // - state: open
+// - review: changes_requested
 func searchChangeRequestedPRsCommand() ([]byte, error) {
-	// TODO: Implement
-	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--limit", "100", "--json", "url")
-	output, err := cmd.Output()
-	return output, err
-}
-
-// Search query:
-// - owner: wantedly
-// - assignee: @me
-// - state: open
-func searchReviewRequestedPRsCommand() ([]byte, error) {
-	// TODO: Implement
 	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--review", "changes_requested", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
 	return output, err
 }
 
 // Search query:
+// - owner: wantedly
+// - assignee: @me
+// - state: open
+// - review: none
+// - draft: 1
+func searchReviewRequestedPRsCommand() ([]byte, error) {
+	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--draft", "0", "--review", "none", "--limit", "100", "--json", "url")
+	output, err := cmd.Output()
+	return output, err
+}
+
+// Search query: Approved のレビューがあるPR
 // - owner: wantedly
 // - assignee: @me
 // - state: open
