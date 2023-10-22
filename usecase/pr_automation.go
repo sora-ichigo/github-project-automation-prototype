@@ -1,6 +1,9 @@
 package usecase
 
-import "github.com/igsr5/github-project-automation/domain"
+import (
+	variables "github.com/igsr5/github-project-automation"
+	"github.com/igsr5/github-project-automation/domain"
+)
 
 type prAutomationImpl struct {
 	prFetcher       PrFetcher
@@ -16,7 +19,20 @@ func NewPrAutomation(prFetcher PrFetcher, projectV2Setter ProjectV2Setter) domai
 }
 
 func (a *prAutomationImpl) SetInProgress() error {
-	// TODO: Implement
+	prs, err := a.prFetcher.WorkInProgressPrs()
+	if err != nil {
+		return err
+	}
+
+	categoryID := variables.PR_CATEGORY_ID
+	statusID := variables.IN_PROGRESS_STATUS_ID
+
+	projectItems := make([]ProjectItem, 0, len(prs))
+	for _, i := range prs {
+		projectItems = append(projectItems, ProjectItem{URL: i.URL})
+	}
+
+	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }
 
