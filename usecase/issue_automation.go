@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"errors"
+
 	variables "github.com/igsr5/github-project-automation"
 	"github.com/igsr5/github-project-automation/domain"
 )
@@ -21,7 +23,7 @@ func NewIssueAutomation(issueFetcher IssueFetcher, projectV2Setter ProjectV2Sett
 func (a *issueAutomationImpl) SetInProgress() error {
 	issues, err := a.issueFetcher.MyIssues()
 	if err != nil {
-		return err
+		return errors.Join(err)
 	}
 
 	categoryID := variables.ISSUE_CATEGORY_ID

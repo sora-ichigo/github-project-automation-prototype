@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"errors"
+
 	variables "github.com/igsr5/github-project-automation"
 	"github.com/igsr5/github-project-automation/domain"
 )
@@ -22,7 +24,7 @@ func NewPrAutomation(prFetcher PrFetcher, projectV2Setter ProjectV2Setter) domai
 func (a *prAutomationImpl) SetInProgress() error {
 	prs, err := a.prFetcher.WorkInProgressPrs()
 	if err != nil {
-		return err
+		return errors.Join(err)
 	}
 
 	categoryID := variables.PR_CATEGORY_ID
@@ -41,7 +43,7 @@ func (a *prAutomationImpl) SetInProgress() error {
 func (a *prAutomationImpl) SetInPending() error {
 	prs, err := a.prFetcher.ReviewRequestedPrs()
 	if err != nil {
-		return err
+		return errors.Join(err)
 	}
 
 	categoryID := variables.PR_CATEGORY_ID
@@ -60,7 +62,7 @@ func (a *prAutomationImpl) SetInPending() error {
 func (a *prAutomationImpl) SetComplete() error {
 	prs, err := a.prFetcher.ApprovedPrs()
 	if err != nil {
-		return err
+		return errors.Join(err)
 	}
 
 	categoryID := variables.PR_CATEGORY_ID
