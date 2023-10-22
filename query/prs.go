@@ -16,7 +16,7 @@ func NewPrFetcher() usecase.PrFetcher {
 }
 
 // WorkInProgressPrs returns a list of pull requests that are in progress.
-func (f *prFetcherImpl) WorkInProgressPrs() ([]usecase.PullRequest, error) {
+func (f *prFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchUnReviewRequestedPRsCommand()
 	if err != nil {
 		return nil, errors.Join(err)
@@ -31,7 +31,22 @@ func (f *prFetcherImpl) WorkInProgressPrs() ([]usecase.PullRequest, error) {
 }
 
 // ReviewRequestedPrs returns a list of pull requests that are requested to review.
-func (f *prFetcherImpl) ReviewRequestedPrs() ([]usecase.PullRequest, error) {
+func (f *prFetcherImpl) CommentedPrs() ([]usecase.PullRequest, error) {
+	b, err := searchReviewRequestedPRsCommand()
+	if err != nil {
+		return nil, errors.Join(err)
+	}
+
+	var prs []usecase.PullRequest
+	if err := json.Unmarshal(b, &prs); err != nil {
+		return nil, errors.Join(err)
+	}
+
+	return prs, nil
+}
+
+// ChangesRequestedPrs returns a list of pull requests that are requested to change.
+func (f *prFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchReviewRequestedPRsCommand()
 	if err != nil {
 		return nil, errors.Join(err)
@@ -86,9 +101,9 @@ func searchReviewRequestedPRsCommand() ([]byte, error) {
 // - owner: wantedly
 // - assignee: @me
 // - state: open
+// - review: approved
 func searchApprovedPRsCommand() ([]byte, error) {
-	// TODO: Implement
-	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--limit", "100", "--json", "url")
+	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--review", "approved", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
 	return output, err
 }

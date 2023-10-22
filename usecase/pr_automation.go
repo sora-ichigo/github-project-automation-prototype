@@ -22,7 +22,7 @@ func NewPrAutomation(prFetcher PrFetcher, projectV2Setter ProjectV2Setter) domai
 
 // SetInProgress sets pull requests that are in progress.
 func (a *prAutomationImpl) SetInProgress() error {
-	prs, err := a.prFetcher.WorkInProgressPrs()
+	prs, err := a.prFetcher.UnReviewedPrs()
 	if err != nil {
 		return errors.Join(err)
 	}
@@ -41,10 +41,17 @@ func (a *prAutomationImpl) SetInProgress() error {
 
 // SetInPending sets pull requests that are requested to review.
 func (a *prAutomationImpl) SetInPending() error {
-	prs, err := a.prFetcher.ReviewRequestedPrs()
+	commentedPrs, err := a.prFetcher.CommentedPrs()
 	if err != nil {
 		return errors.Join(err)
 	}
+
+	changesRequestedPrs, err := a.prFetcher.ChangesRequestedPrs()
+	if err != nil {
+		return errors.Join(err)
+	}
+
+	prs := append(commentedPrs, changesRequestedPrs...)
 
 	categoryID := variables.PR_CATEGORY_ID
 	statusID := variables.IN_PENDING_STATUS_ID
