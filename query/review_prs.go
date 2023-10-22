@@ -1,6 +1,12 @@
 package query
 
-import "github.com/igsr5/github-project-automation/usecase"
+import (
+	"encoding/json"
+	"errors"
+	"os/exec"
+
+	"github.com/igsr5/github-project-automation/usecase"
+)
 
 type reviewPrFetcherImpl struct{}
 
@@ -11,13 +17,18 @@ func NewReviewPrFetcher() usecase.ReviewPrFetcher {
 
 // UnReviewedPrs returns a list of pull requests that are not reviewed.
 func (f *reviewPrFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
-	// TODO: Implement
-	prs := []usecase.PullRequest{
-		{
-			URL: "",
-		},
+	b, err := searchUnReviewedPRCommand()
+	if err != nil {
+		return nil, errors.Join(err)
 	}
+
+	var prs []usecase.PullRequest
+	if err := json.Unmarshal(b, &prs); err != nil {
+		return nil, errors.Join(err)
+	}
+
 	return prs, nil
+
 }
 
 // CommentedPrs returns a list of pull requests that are commented.
@@ -51,4 +62,14 @@ func (f *reviewPrFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 		},
 	}
 	return prs, nil
+}
+
+// Search query:
+// - owner: wantedly
+// - state: open
+// - review-requested: @me
+func searchUnReviewedPRCommand() ([]byte, error) {
+	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--state", "open", "--review-requested", "@me", "--limit", "100", "--json", "url")
+	output, err := cmd.Output()
+	return output, err
 }
