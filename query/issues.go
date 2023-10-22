@@ -1,7 +1,6 @@
 package query
 
 import (
-	"github.com/igsr5/github-project-automation/domain"
 	"github.com/igsr5/github-project-automation/usecase"
 )
 
@@ -14,8 +13,8 @@ func NewIssueFetcher() usecase.IssueFetcher {
 }
 
 // MyIssues returns issues assigned to me.
-func (f *issueFetcherImpl) MyIssues() ([]domain.Issue, error) {
-	issues := []domain.Issue{
+func (f *issueFetcherImpl) MyIssues() ([]usecase.Issue, error) {
+	issues := []usecase.Issue{
 		{
 			Url: "https://github.com/wantedly/wantedly/issue/1234",
 		},
