@@ -15,7 +15,7 @@ func NewPrFetcher() usecase.PrFetcher {
 	return &prFetcherImpl{}
 }
 
-// WorkInProgressPrs returns a list of pull requests that are in progress.
+// UnReviewedPrs returns a list of pull requests that are not reviewed.
 func (f *prFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchUnReviewRequestedPRsCommand()
 	if err != nil {
