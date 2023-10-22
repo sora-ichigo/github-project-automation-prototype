@@ -1,4 +1,4 @@
-package command
+package query
 
 import "github.com/igsr5/github-project-automation/domain"
 

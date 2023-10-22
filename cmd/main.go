@@ -6,11 +6,12 @@ import (
 
 	"github.com/igsr5/github-project-automation/command"
 	"github.com/igsr5/github-project-automation/domain"
+	"github.com/igsr5/github-project-automation/query"
 )
 
 func main() {
-	projectV2Setter := command.NewProjectV2Setter()
-	issueFetcher := command.NewIssueFetcher()
+	projectV2Setter := query.NewProjectV2Setter()
+	issueFetcher := query.NewIssueFetcher()
 	automations := []domain.Automation{
 		command.NewIssueAssignedToMeAutomation(issueFetcher, projectV2Setter),
 		command.NewPrAssignedToMeAutomation(),
