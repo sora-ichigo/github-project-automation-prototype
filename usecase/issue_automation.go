@@ -6,20 +6,20 @@ import (
 )
 
 type issueAutomationImpl struct {
-	issuefetcher    IssueFetcher
+	issueFetcher    IssueFetcher
 	projectV2Setter ProjectV2Setter
 }
 
 // NewIssueAutomation is a factory method to create a new instance of IssueAutomation.
 func NewIssueAutomation(issueFetcher IssueFetcher, projectV2Setter ProjectV2Setter) domain.IssueAutomation {
 	return &issueAutomationImpl{
-		issuefetcher:    issueFetcher,
+		issueFetcher:    issueFetcher,
 		projectV2Setter: projectV2Setter,
 	}
 }
 
 func (a *issueAutomationImpl) SetInProgress() error {
-	issues, err := a.issuefetcher.MyIssues()
+	issues, err := a.issueFetcher.MyIssues()
 	if err != nil {
 		return err
 	}
