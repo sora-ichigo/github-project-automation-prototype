@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"errors"
+	"log"
 
 	variables "github.com/igsr5/github-project-automation"
 	"github.com/igsr5/github-project-automation/domain"
@@ -34,6 +35,8 @@ func (a *issueAutomationImpl) SetInProgress() error {
 		projectItems = append(projectItems, ProjectItem{URL: i.URL})
 	}
 
+	log.Printf("issues automation\n")
+	log.Printf("SetInProgress: %v\n", projectItems)
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }
