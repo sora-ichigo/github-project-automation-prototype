@@ -1,6 +1,12 @@
 package query
 
-import "github.com/igsr5/github-project-automation/usecase"
+import (
+	"encoding/json"
+	"errors"
+	"os/exec"
+
+	"github.com/igsr5/github-project-automation/usecase"
+)
 
 type prFetcherImpl struct{}
 
@@ -11,11 +17,14 @@ func NewPrFetcher() usecase.PrFetcher {
 
 // WorkInProgressPrs returns a list of pull requests that are in progress.
 func (f *prFetcherImpl) WorkInProgressPrs() ([]usecase.PullRequest, error) {
-	// TODO: Implement
-	prs := []usecase.PullRequest{
-		{
-			URL: "",
-		},
+	b, err := searchUnReviewRequestedPRsCommand()
+	if err != nil {
+		return nil, errors.Join(err)
+	}
+
+	var prs []usecase.PullRequest
+	if err := json.Unmarshal(b, &prs); err != nil {
+		return nil, errors.Join(err)
 	}
 
 	return prs, nil
@@ -23,11 +32,14 @@ func (f *prFetcherImpl) WorkInProgressPrs() ([]usecase.PullRequest, error) {
 
 // ReviewRequestedPrs returns a list of pull requests that are requested to review.
 func (f *prFetcherImpl) ReviewRequestedPrs() ([]usecase.PullRequest, error) {
-	// TODO: Implement
-	prs := []usecase.PullRequest{
-		{
-			URL: "",
-		},
+	b, err := searchReviewRequestedPRsCommand()
+	if err != nil {
+		return nil, errors.Join(err)
+	}
+
+	var prs []usecase.PullRequest
+	if err := json.Unmarshal(b, &prs); err != nil {
+		return nil, errors.Join(err)
 	}
 
 	return prs, nil
@@ -35,12 +47,48 @@ func (f *prFetcherImpl) ReviewRequestedPrs() ([]usecase.PullRequest, error) {
 
 // ApprovedPrs returns a list of pull requests that are approved.
 func (f *prFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
-	// TODO: Implement
-	prs := []usecase.PullRequest{
-		{
-			URL: "",
-		},
+	b, err := searchApprovedPRsCommand()
+	if err != nil {
+		return nil, errors.Join(err)
+	}
+
+	var prs []usecase.PullRequest
+	if err := json.Unmarshal(b, &prs); err != nil {
+		return nil, errors.Join(err)
 	}
 
 	return prs, nil
+}
+
+// Search query:
+// - owner: wantedly
+// - assignee: @me
+// - state: open
+func searchUnReviewRequestedPRsCommand() ([]byte, error) {
+	// TODO: Implement
+	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--limit", "100", "--json", "url")
+	output, err := cmd.Output()
+	return output, err
+}
+
+// Search query:
+// - owner: wantedly
+// - assignee: @me
+// - state: open
+func searchReviewRequestedPRsCommand() ([]byte, error) {
+	// TODO: Implement
+	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--limit", "100", "--json", "url")
+	output, err := cmd.Output()
+	return output, err
+}
+
+// Search query:
+// - owner: wantedly
+// - assignee: @me
+// - state: open
+func searchApprovedPRsCommand() ([]byte, error) {
+	// TODO: Implement
+	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--limit", "100", "--json", "url")
+	output, err := cmd.Output()
+	return output, err
 }
