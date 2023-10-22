@@ -12,8 +12,8 @@ type IssueAutomation interface {
 	Automation
 }
 
-// PrAssignedToMeAutomation is an interface for automations that are triggered when a PR is assigned to me.
-type PrAssignedToMeAutomation interface {
+// PrAutomation is an interface for automations that are triggered when a PR is assigned to me.
+type PrAutomation interface {
 	Automation
 }
 

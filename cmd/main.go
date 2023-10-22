@@ -15,7 +15,7 @@ func main() {
 	issueFetcher := query.NewIssueFetcher()
 	automations := []domain.Automation{
 		usecase.NewIssueAutomation(issueFetcher, projectV2Setter),
-		usecase.NewPrAssignedToMeAutomation(),
+		usecase.NewPrAutomation(),
 		usecase.NewPrAssignedToReviewerAutomation(),
 	}
 
