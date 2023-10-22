@@ -1,6 +1,9 @@
 package usecase
 
-import "github.com/igsr5/github-project-automation/domain"
+import (
+	variables "github.com/igsr5/github-project-automation"
+	"github.com/igsr5/github-project-automation/domain"
+)
 
 type issueAssignedToMeAutomationImpl struct {
 	issuefetcher    IssueFetcher
@@ -21,9 +24,8 @@ func (a *issueAssignedToMeAutomationImpl) SetInProgress() error {
 		return err
 	}
 
-	// TODO: Implement
-	categoryId := "1234"
-	statusId := "5678"
+	categoryId := variables.ISSUE_CATEGORY_ID
+	statusId := variables.IN_PROGRESS_STATUS_ID
 
 	projectItems := make([]ProjectItem, 0, len(issues))
 	for _, i := range issues {
