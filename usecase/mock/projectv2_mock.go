@@ -39,15 +39,15 @@ func (m *MockProjectV2Setter) EXPECT() *MockProjectV2SetterMockRecorder {
 }
 
 // Set mocks base method.
-func (m *MockProjectV2Setter) Set(categoryId, statusId string, projectItems []usecase.ProjectItem) error {
+func (m *MockProjectV2Setter) Set(categoryID, statusID string, projectItems []usecase.ProjectItem) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Set", categoryId, statusId, projectItems)
+	ret := m.ctrl.Call(m, "Set", categoryID, statusID, projectItems)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Set indicates an expected call of Set.
-func (mr *MockProjectV2SetterMockRecorder) Set(categoryId, statusId, projectItems any) *gomock.Call {
+func (mr *MockProjectV2SetterMockRecorder) Set(categoryID, statusID, projectItems any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockProjectV2Setter)(nil).Set), categoryId, statusId, projectItems)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockProjectV2Setter)(nil).Set), categoryID, statusID, projectItems)
 }
