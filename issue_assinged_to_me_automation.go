@@ -1,10 +1,16 @@
 package main
 
-type issueAssignedToMeAutomationImpl struct{}
+type issueAssignedToMeAutomationImpl struct {
+	issuefetcher    *IssueFetcher
+	projectV2Setter *ProjectV2Setter
+}
 
 // NewIssueAssignedToMeAutomation is a factory method to create a new instance of IssueAssignedToMeAutomation.
-func NewIssueAssignedToMeAutomation() IssueAssignedToMeAutomation {
-	return &issueAssignedToMeAutomationImpl{}
+func NewIssueAssignedToMeAutomation(issueFetcher *IssueFetcher, projectV2Setter *ProjectV2Setter) IssueAssignedToMeAutomation {
+	return &issueAssignedToMeAutomationImpl{
+		issuefetcher:    issueFetcher,
+		projectV2Setter: projectV2Setter,
+	}
 }
 
 func (a *issueAssignedToMeAutomationImpl) setInProgress() error {

@@ -6,8 +6,10 @@ import (
 )
 
 func main() {
+	projectV2Setter := NewProjectV2Setter()
+	issueFetcher := NewIssueFetcher()
 	automations := []Automation{
-		NewIssueAssignedToMeAutomation(),
+		NewIssueAssignedToMeAutomation(&issueFetcher, &projectV2Setter),
 		NewPrAssignedToMeAutomation(),
 		NewPrAssignedToReviewerAutomation(),
 	}
