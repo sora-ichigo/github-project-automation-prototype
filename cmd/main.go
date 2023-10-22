@@ -22,7 +22,7 @@ func main() {
 	}
 
 	for _, a := range automations {
-		if err := a.SetInPending(); err != nil {
+		if err := a.SetInProgress(); err != nil {
 			log.Printf("error occurred: %v", err)
 			os.Exit(1)
 		}

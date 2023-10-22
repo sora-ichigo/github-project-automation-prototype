@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"errors"
+	"log"
 
 	variables "github.com/igsr5/github-project-automation"
 	"github.com/igsr5/github-project-automation/domain"
@@ -40,6 +41,8 @@ func (a *prAutomationImpl) SetInProgress() error {
 		projectItems = append(projectItems, ProjectItem{URL: i.URL})
 	}
 
+	log.Printf("pr automation\n")
+	log.Printf("SetInProgress: %v\n", projectItems)
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }
@@ -59,6 +62,8 @@ func (a *prAutomationImpl) SetInPending() error {
 		projectItems = append(projectItems, ProjectItem{URL: i.URL})
 	}
 
+	log.Printf("pr automation\n")
+	log.Printf("SetInPending: %v", projectItems)
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }
@@ -78,6 +83,8 @@ func (a *prAutomationImpl) SetComplete() error {
 		projectItems = append(projectItems, ProjectItem{URL: i.URL})
 	}
 
+	log.Printf("pr automation\n")
+	log.Printf("SetComplete: %v\n", projectItems)
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }

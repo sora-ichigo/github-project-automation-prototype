@@ -32,23 +32,35 @@ func (f *reviewPrFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
 
 // CommentedPrs returns a list of pull requests that are commented.
 func (f *reviewPrFetcherImpl) CommentedPrs() ([]usecase.PullRequest, error) {
-	// TODO: Implement
-	prs := []usecase.PullRequest{
-		{
-			URL: "",
-		},
+	b, err := searchCommentedReviewPRCommand()
+	if err != nil {
+		return nil, errors.Join(err)
 	}
+
+	var prs []usecase.PullRequest
+	if err := json.Unmarshal(b, &prs); err != nil {
+		return nil, errors.Join(err)
+	}
+
+	// TODO: review-requested な PR が含まれている場合は除外する
+
 	return prs, nil
 }
 
 // ChangesRequestedPrs returns a list of pull requests that are requested to change.
 func (f *reviewPrFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
-	// TODO: Implement
-	prs := []usecase.PullRequest{
-		{
-			URL: "",
-		},
+	b, err := searchChangesRequestedReviewPRCommand()
+	if err != nil {
+		return nil, errors.Join(err)
 	}
+
+	var prs []usecase.PullRequest
+	if err := json.Unmarshal(b, &prs); err != nil {
+		return nil, errors.Join(err)
+	}
+
+	// TODO: review-requested な PR が含まれている場合は除外する
+
 	return prs, nil
 }
 
@@ -73,6 +85,29 @@ func (f *reviewPrFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 // - review-requested: @me
 func searchUnReviewedPRCommand() ([]byte, error) {
 	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--state", "open", "--review-requested", "@me", "--limit", "100", "--json", "url")
+	output, err := cmd.Output()
+	return output, err
+}
+
+// Search query:
+// - owner: wantedly
+// - state: open
+// - review: none
+// - reviewed-by: @me
+// - no-assignee: @me
+func searchCommentedReviewPRCommand() ([]byte, error) {
+	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--state", "open", "--reviewed-by", "@me", "--review", "none", "--no-assignee", "@me", "--limit", "100", "--json", "url")
+	output, err := cmd.Output()
+	return output, err
+}
+
+// Search query:
+// - owner: wantedly
+// - state: open
+// - review: changes_requested
+// - reviewed-by: @me
+func searchChangesRequestedReviewPRCommand() ([]byte, error) {
+	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--state", "open", "--review", "changes_requested", "--reviewed-by", "@me", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
 	return output, err
 }
