@@ -10,13 +10,16 @@ func NewPrAssignedToReviewerAutomation() domain.PrAssignedToReviewerAutomation {
 }
 
 func (a *prAssignedToReviewerAutomationImpl) SetInProgress() error {
+	// TODO: Implement
 	return nil
 }
 
 func (a *prAssignedToReviewerAutomationImpl) SetInPending() error {
+	// TODO: Implement
 	return nil
 }
 
 func (a *prAssignedToReviewerAutomationImpl) SetComplete() error {
+	// TODO: Implement
 	return nil
 }

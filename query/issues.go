@@ -14,6 +14,7 @@ func NewIssueFetcher() usecase.IssueFetcher {
 
 // MyIssues returns issues assigned to me.
 func (f *issueFetcherImpl) MyIssues() ([]usecase.Issue, error) {
+	// TODO: Implement
 	issues := []usecase.Issue{
 		{
 			Url: "https://github.com/wantedly/wantedly/issue/1234",

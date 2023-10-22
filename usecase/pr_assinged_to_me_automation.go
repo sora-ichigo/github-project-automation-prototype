@@ -11,13 +11,16 @@ func NewPrAssignedToMeAutomation() domain.PrAssignedToMeAutomation {
 }
 
 func (a *prAssignedToMeAutomationImpl) SetInProgress() error {
+	// TODO: Implement
 	return nil
 }
 
 func (a *prAssignedToMeAutomationImpl) SetInPending() error {
+	// TODO: Implement
 	return nil
 }
 
 func (a *prAssignedToMeAutomationImpl) SetComplete() error {
+	// TODO: Implement
 	return nil
 }

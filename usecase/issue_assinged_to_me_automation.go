@@ -21,6 +21,7 @@ func (a *issueAssignedToMeAutomationImpl) SetInProgress() error {
 		return err
 	}
 
+	// TODO: Implement
 	categoryId := "1234"
 	statusId := "5678"
 
