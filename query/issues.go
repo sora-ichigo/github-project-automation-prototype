@@ -18,12 +18,7 @@ func NewIssueFetcher() usecase.IssueFetcher {
 
 // MyIssues returns issues assigned to me.
 func (f *issueFetcherImpl) MyIssues() ([]usecase.Issue, error) {
-	// Search query:
-	// - owner: wantedly
-	// - assignee: @me
-	// - state: open
-	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--limit", "100", "--json", "url")
-	output, err := cmd.Output()
+	output, err := searchIssueCommand()
 	if err != nil {
 		return nil, errors.Join(err)
 	}
@@ -34,4 +29,14 @@ func (f *issueFetcherImpl) MyIssues() ([]usecase.Issue, error) {
 	}
 
 	return issues, nil
+}
+
+// Search query:
+// - owner: wantedly
+// - assignee: @me
+// - state: open
+func searchIssueCommand() ([]byte, error) {
+	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--limit", "100", "--json", "url")
+	output, err := cmd.Output()
+	return output, err
 }
