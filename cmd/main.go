@@ -14,10 +14,11 @@ func main() {
 	projectV2Setter := command.NewProjectV2Setter()
 	issueFetcher := query.NewIssueFetcher()
 	prFetcher := query.NewPrFetcher()
+	reviewPrFetcher := query.NewReviewPrFetcher()
 	automations := []domain.Automation{
 		usecase.NewIssueAutomation(issueFetcher, projectV2Setter),
 		usecase.NewPrAutomation(prFetcher, projectV2Setter),
-		usecase.NewReviewPrAutomation(),
+		usecase.NewReviewPrAutomation(reviewPrFetcher, projectV2Setter),
 	}
 
 	for _, a := range automations {

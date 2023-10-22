@@ -23,3 +23,11 @@ type PrFetcher interface {
 	ReviewRequestedPrs() ([]PullRequest, error)
 	ApprovedPrs() ([]PullRequest, error)
 }
+
+// ReviewPrFetcher is an interface for fetching pull requests that are requested to review.
+type ReviewPrFetcher interface {
+	UnReviewedPrs() ([]PullRequest, error)
+	CommentedPrs() ([]PullRequest, error)
+	ChangesRequestedPrs() ([]PullRequest, error)
+	ApprovedPrs() ([]PullRequest, error)
+}
