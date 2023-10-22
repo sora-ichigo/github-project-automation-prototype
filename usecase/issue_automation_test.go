@@ -3,6 +3,7 @@ package usecase_test
 import (
 	"testing"
 
+	variables "github.com/igsr5/github-project-automation"
 	usecase "github.com/igsr5/github-project-automation/usecase"
 	mock_usecase "github.com/igsr5/github-project-automation/usecase/mock"
 	gomock "go.uber.org/mock/gomock"
@@ -23,7 +24,7 @@ func TestIssueAutomationSetInProgress(t *testing.T) {
 
 	// Expected calls
 	mockIssueFetcher.EXPECT().MyIssues().Return(expectedIssues, nil).Times(1)
-	mockProjectV2Setter.EXPECT().Set(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil).Times(1)
+	mockProjectV2Setter.EXPECT().Set(variables.ISSUE_CATEGORY_ID, variables.IN_PROGRESS_STATUS_ID, gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks
 	automation := usecase.NewIssueAutomation(mockIssueFetcher, mockProjectV2Setter)

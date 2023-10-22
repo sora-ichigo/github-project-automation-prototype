@@ -3,6 +3,7 @@ package usecase_test
 import (
 	"testing"
 
+	variables "github.com/igsr5/github-project-automation"
 	usecase "github.com/igsr5/github-project-automation/usecase"
 	mock_usecase "github.com/igsr5/github-project-automation/usecase/mock"
 	"go.uber.org/mock/gomock"
@@ -23,7 +24,7 @@ func TestPrAutomationSetInProgress(t *testing.T) {
 
 	// Expected calls
 	mockPrFetcher.EXPECT().WorkInProgressPrs().Return(expectedIssues, nil).Times(1)
-	mockProjectV2Setter.EXPECT().Set(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil).Times(1)
+	mockProjectV2Setter.EXPECT().Set(variables.PR_CATEGORY_ID, variables.IN_PROGRESS_STATUS_ID, gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks
 	automation := usecase.NewPrAutomation(mockPrFetcher, mockProjectV2Setter)
@@ -53,7 +54,7 @@ func TestPrAutomationSetInPending(t *testing.T) {
 
 	// Expected calls
 	mockPrFetcher.EXPECT().ReviewRequestedPrs().Return(expectedIssues, nil).Times(1)
-	mockProjectV2Setter.EXPECT().Set(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil).Times(1)
+	mockProjectV2Setter.EXPECT().Set(variables.PR_CATEGORY_ID, variables.IN_PENDING_STATUS_ID, gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks
 	automation := usecase.NewPrAutomation(mockPrFetcher, mockProjectV2Setter)
@@ -83,7 +84,7 @@ func TestPrAutomationSetComplete(t *testing.T) {
 
 	// Expected calls
 	mockPrFetcher.EXPECT().ApprovedPrs().Return(expectedIssues, nil).Times(1)
-	mockProjectV2Setter.EXPECT().Set(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil).Times(1)
+	mockProjectV2Setter.EXPECT().Set(variables.PR_CATEGORY_ID, variables.COMPLETE_STATUS_ID, gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks
 	automation := usecase.NewPrAutomation(mockPrFetcher, mockProjectV2Setter)
