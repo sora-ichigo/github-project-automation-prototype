@@ -1,8 +1,11 @@
 package main
 
+// Issue is a struct for an issue.
 type Issue struct {
 	Url string
 }
+
+// IssueFetcher is an interface for fetching issues.
 type IssueFetcher interface {
 	MyIssues() ([]Issue, error)
 }
@@ -10,10 +13,12 @@ type IssueFetcher interface {
 type issueFetcherImpl struct {
 }
 
+// NewIssueFetcher is a factory method to create a new instance of IssueFetcher.
 func NewIssueFetcher() IssueFetcher {
 	return &issueFetcherImpl{}
 }
 
+// MyIssues returns issues assigned to me.
 func (f *issueFetcherImpl) MyIssues() ([]Issue, error) {
 	issues := []Issue{
 		{
