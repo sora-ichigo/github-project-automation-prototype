@@ -18,13 +18,13 @@ func NewIssueFetcher() usecase.IssueFetcher {
 
 // MyIssues returns issues assigned to me.
 func (f *issueFetcherImpl) MyIssues() ([]usecase.Issue, error) {
-	output, err := searchIssueCommand()
+	b, err := searchIssueCommand()
 	if err != nil {
 		return nil, errors.Join(err)
 	}
 
 	var issues []usecase.Issue
-	if err := json.Unmarshal(output, &issues); err != nil {
+	if err := json.Unmarshal(b, &issues); err != nil {
 		return nil, errors.Join(err)
 	}
 

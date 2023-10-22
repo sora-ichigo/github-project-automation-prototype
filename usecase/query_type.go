@@ -9,7 +9,7 @@ type Issue struct {
 
 // PullRequest is a struct for a pull request.
 type PullRequest struct {
-	URL string
+	URL string `json:"url"`
 }
 
 // IssueFetcher is an interface for fetching issues.
