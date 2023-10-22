@@ -2,6 +2,7 @@ package main
 
 type issueAssignedToMeAutomationImpl struct{}
 
+// NewIssueAssignedToMeAutomation is a factory method to create a new instance of IssueAssignedToMeAutomation.
 func NewIssueAssignedToMeAutomation() IssueAssignedToMeAutomation {
 	return &issueAssignedToMeAutomationImpl{}
 }

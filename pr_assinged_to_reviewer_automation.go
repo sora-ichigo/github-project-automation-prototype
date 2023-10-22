@@ -2,6 +2,7 @@ package main
 
 type prAssignedToReviewerAutomationImpl struct{}
 
+// NewPrAssignedToReviewerAutomation is a factory method to create a new instance of PrAssignedToReviewerAutomation.
 func NewPrAssignedToReviewerAutomation() PrAssignedToReviewerAutomation {
 	return &prAssignedToReviewerAutomationImpl{}
 }
