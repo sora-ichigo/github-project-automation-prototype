@@ -17,7 +17,7 @@ func (f *issueFetcherImpl) MyIssues() ([]usecase.Issue, error) {
 	// TODO: Implement
 	issues := []usecase.Issue{
 		{
-			Url: "https://github.com/wantedly/wantedly/issue/1234",
+			URL: "https://github.com/wantedly/wantedly/issue/1234",
 		},
 	}
 	return issues, nil

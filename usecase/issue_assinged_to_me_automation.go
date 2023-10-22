@@ -27,7 +27,7 @@ func (a *issueAssignedToMeAutomationImpl) SetInProgress() error {
 
 	projectItems := make([]ProjectItem, 0, len(issues))
 	for _, i := range issues {
-		projectItems = append(projectItems, ProjectItem{Url: i.Url})
+		projectItems = append(projectItems, ProjectItem{URL: i.URL})
 	}
 
 	a.projectV2Setter.Set(categoryId, statusId, projectItems)

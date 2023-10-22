@@ -18,7 +18,7 @@ func TestIssueAssignedToMeAutomationImpl_MyIssues(t *testing.T) {
 
 	// Expected data
 	expectedIssues := []usecase.Issue{
-		{Url: "https://github.com/wantedly/wantedly/issue/1234"},
+		{URL: "https://github.com/wantedly/wantedly/issue/1234"},
 	}
 
 	// Expected calls
