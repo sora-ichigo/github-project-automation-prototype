@@ -4,7 +4,7 @@ package usecase
 
 // Issue is a struct for an issue.
 type Issue struct {
-	URL string
+	URL string `json:"url"`
 }
 
 // PullRequest is a struct for a pull request.
