@@ -101,7 +101,7 @@ func searchChangeRequestedPRsCommand() ([]byte, error) {
 // - assignee: @me
 // - state: open
 // - review: none
-// - draft: 1
+// - draft: 0
 func searchReviewRequestedPRsCommand() ([]byte, error) {
 	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--draft", "0", "--review", "none", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
