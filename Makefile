@@ -10,12 +10,6 @@ clean:
 test:
 	go test ./...
 
-fmt:
-	gofmt -w .
-
-lint:
-	golint ./...
-
 generate:
 	go generate ./...
 
