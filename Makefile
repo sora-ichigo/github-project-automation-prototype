@@ -10,6 +10,6 @@ clean:
 test:
 	go test ./...
 
-generate:
+gen:
 	go generate ./...
 

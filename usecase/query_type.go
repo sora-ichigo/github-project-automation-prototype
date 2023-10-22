@@ -1,4 +1,4 @@
-//go:generate mockgen -source=issues.go -destination=mock/issues_mock.go -package=mock
+//go:generate mockgen -source=query_type.go -destination=mock/query_type_mock.go -package=mock
 
 package usecase
 

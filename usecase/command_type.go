@@ -1,4 +1,4 @@
-//go:generate mockgen -source=projectv2.go -destination=mock/projectv2_mock.go -package=mock
+//go:generate mockgen -source=command_type.go -destination=mock/command_type_mock.go -package=mock
 
 package usecase
 
