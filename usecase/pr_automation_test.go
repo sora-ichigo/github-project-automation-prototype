@@ -18,12 +18,12 @@ func TestPrAutomationSetInProgress(t *testing.T) {
 	mockProjectV2Setter := mock_usecase.NewMockProjectV2Setter(ctrl)
 
 	// Expected data
-	expectedIssues := []usecase.PullRequest{
+	expectedPRs := []usecase.PullRequest{
 		{URL: "https://github.com/wantedly/wantedly/issue/1234"},
 	}
 
 	// Expected calls
-	mockPrFetcher.EXPECT().WorkInProgressPrs().Return(expectedIssues, nil).Times(1)
+	mockPrFetcher.EXPECT().WorkInProgressPrs().Return(expectedPRs, nil).Times(1)
 	mockProjectV2Setter.EXPECT().Set(variables.PR_CATEGORY_ID, variables.IN_PROGRESS_STATUS_ID, gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks
@@ -48,12 +48,12 @@ func TestPrAutomationSetInPending(t *testing.T) {
 	mockProjectV2Setter := mock_usecase.NewMockProjectV2Setter(ctrl)
 
 	// Expected data
-	expectedIssues := []usecase.PullRequest{
+	expectedPRs := []usecase.PullRequest{
 		{URL: "https://github.com/wantedly/wantedly/issue/1234"},
 	}
 
 	// Expected calls
-	mockPrFetcher.EXPECT().ReviewRequestedPrs().Return(expectedIssues, nil).Times(1)
+	mockPrFetcher.EXPECT().ReviewRequestedPrs().Return(expectedPRs, nil).Times(1)
 	mockProjectV2Setter.EXPECT().Set(variables.PR_CATEGORY_ID, variables.IN_PENDING_STATUS_ID, gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks
@@ -78,12 +78,12 @@ func TestPrAutomationSetComplete(t *testing.T) {
 	mockProjectV2Setter := mock_usecase.NewMockProjectV2Setter(ctrl)
 
 	// Expected data
-	expectedIssues := []usecase.PullRequest{
+	expectedPRs := []usecase.PullRequest{
 		{URL: "https://github.com/wantedly/wantedly/issue/1234"},
 	}
 
 	// Expected calls
-	mockPrFetcher.EXPECT().ApprovedPrs().Return(expectedIssues, nil).Times(1)
+	mockPrFetcher.EXPECT().ApprovedPrs().Return(expectedPRs, nil).Times(1)
 	mockProjectV2Setter.EXPECT().Set(variables.PR_CATEGORY_ID, variables.COMPLETE_STATUS_ID, gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks
