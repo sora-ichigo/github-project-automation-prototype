@@ -8,7 +8,7 @@ import (
 	gomock "go.uber.org/mock/gomock"
 )
 
-func TestIssueAutomation(t *testing.T) {
+func TestIssueAutomationSetInProgress(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
