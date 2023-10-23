@@ -24,7 +24,7 @@ func NewIssueAutomation(issueFetcher IssueFetcher, projectV2Setter ProjectV2Sett
 func (a *issueAutomationImpl) SetInProgress() error {
 	issues, err := a.issueFetcher.MyIssues()
 	if err != nil {
-		return fmt.Errorf("failed to fetch issues: %w", err)
+		return fmt.Errorf("IssueAutomation SetInProgress is failed: %w", err)
 	}
 
 	categoryID := variables.ISSUE_CATEGORY_ID

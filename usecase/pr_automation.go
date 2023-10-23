@@ -25,11 +25,11 @@ func NewPrAutomation(prFetcher PrFetcher, projectV2Setter ProjectV2Setter) domai
 func (a *prAutomationImpl) SetInProgress() error {
 	unReviewedPrs, err := a.prFetcher.UnReviewedPrs()
 	if err != nil {
-		return fmt.Errorf("failed to fetch unreviewed prs: %w", err)
+		return fmt.Errorf("PRAutomation SetInProgress is failed: %w", err)
 	}
 	changesRequestedPrs, err := a.prFetcher.ChangesRequestedPrs()
 	if err != nil {
-		return fmt.Errorf("failed to fetch changes requested prs: %w", err)
+		return fmt.Errorf("PRAutomation SetInProgress is failed: %w", err)
 	}
 	prs := append(unReviewedPrs, changesRequestedPrs...)
 
@@ -51,7 +51,7 @@ func (a *prAutomationImpl) SetInProgress() error {
 func (a *prAutomationImpl) SetInPending() error {
 	prs, err := a.prFetcher.ReviewRequestedPrs()
 	if err != nil {
-		return fmt.Errorf("failed to fetch review requested prs: %w", err)
+		return fmt.Errorf("PRAutomation SetInPending is failed: %w", err)
 	}
 
 	categoryID := variables.PR_CATEGORY_ID
@@ -72,7 +72,7 @@ func (a *prAutomationImpl) SetInPending() error {
 func (a *prAutomationImpl) SetComplete() error {
 	prs, err := a.prFetcher.ApprovedPrs()
 	if err != nil {
-		return fmt.Errorf("failed to fetch approved prs: %w", err)
+		return fmt.Errorf("PRAutomation SetComplete is failed: %w", err)
 	}
 
 	categoryID := variables.PR_CATEGORY_ID
