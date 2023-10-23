@@ -81,7 +81,7 @@ func (f *prFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 // - state: open
 // - draft: 1
 func searchDraftPRsCommand() ([]byte, error) {
-	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--draft", "1", "--limit", "100", "--json", "url")
+	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--draft", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
 	return output, err
 }
@@ -104,7 +104,7 @@ func searchChangeRequestedPRsCommand() ([]byte, error) {
 // - review: none
 // - draft: 0
 func searchReviewRequestedPRsCommand() ([]byte, error) {
-	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--draft", "0", "--review", "none", "--limit", "100", "--json", "url")
+	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--review", "none", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
 	return output, err
 }
