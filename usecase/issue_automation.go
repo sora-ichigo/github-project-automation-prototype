@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"errors"
+	"fmt"
 	"log"
 
 	variables "github.com/igsr5/github-project-automation"
@@ -24,7 +24,7 @@ func NewIssueAutomation(issueFetcher IssueFetcher, projectV2Setter ProjectV2Sett
 func (a *issueAutomationImpl) SetInProgress() error {
 	issues, err := a.issueFetcher.MyIssues()
 	if err != nil {
-		return errors.Join(err)
+		return fmt.Errorf("failed to fetch issues: %w", err)
 	}
 
 	categoryID := variables.ISSUE_CATEGORY_ID

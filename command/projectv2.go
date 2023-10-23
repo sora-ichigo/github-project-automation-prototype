@@ -2,7 +2,7 @@ package command
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
 	"os/exec"
 
 	variables "github.com/igsr5/github-project-automation"
@@ -28,7 +28,7 @@ func (s *projectV2SetterImpl) Set(categoryID string, statusID string, projectIte
 	for _, item := range projectItems {
 		item, err := addProjectItem(item.URL)
 		if err != nil {
-			return errors.Join(err)
+			return fmt.Errorf("failed to add project item: %w", err)
 		}
 		items = append(items, *item)
 	}
@@ -37,7 +37,7 @@ func (s *projectV2SetterImpl) Set(categoryID string, statusID string, projectIte
 	for _, id := range items {
 		err := moveStatusProjectItem(id, statusID)
 		if err != nil {
-			return errors.Join(err)
+			return fmt.Errorf("failed to move status project item: %w", err)
 		}
 	}
 
@@ -45,7 +45,7 @@ func (s *projectV2SetterImpl) Set(categoryID string, statusID string, projectIte
 	for _, id := range items {
 		err := moveCategoryProjectItem(id, categoryID)
 		if err != nil {
-			return errors.Join(err)
+			return fmt.Errorf("failed to move category project item: %w", err)
 		}
 	}
 
@@ -56,12 +56,12 @@ func addProjectItem(url string) (*Item, error) {
 	cmd := exec.Command("gh", "project", "item-add", variables.PROJECT_NUMBER, "--owner", "wantedly", "--url", url, "--format", "json")
 	output, err := cmd.Output()
 	if err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to add project item: %w", err)
 	}
 
 	var item Item
 	if err := json.Unmarshal(output, &item); err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to unmarshal project item: %w", err)
 	}
 
 	return &item, nil
@@ -71,7 +71,7 @@ func moveStatusProjectItem(item Item, statusID string) error {
 	cmd := exec.Command("gh", "project", "item-edit", "--id", item.ID, "--field-id", variables.STATUS_FIELD_ID, "--project-id", variables.PROJECT_ID, "--single-select-option-id", statusID)
 	_, err := cmd.Output()
 	if err != nil {
-		return errors.Join(err)
+		return fmt.Errorf("failed to move status project item: %w", err)
 	}
 
 	return nil
@@ -81,7 +81,7 @@ func moveCategoryProjectItem(item Item, categoryID string) error {
 	cmd := exec.Command("gh", "project", "item-edit", "--id", item.ID, "--field-id", variables.CATEGORY_FIELD_ID, "--project-id", variables.PROJECT_ID, "--single-select-option-id", categoryID)
 	_, err := cmd.Output()
 	if err != nil {
-		return errors.Join(err)
+		return fmt.Errorf("failed to move category project item: %w", err)
 	}
 
 	return nil

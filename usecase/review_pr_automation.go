@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"errors"
+	"fmt"
 	"log"
 
 	variables "github.com/igsr5/github-project-automation"
@@ -24,7 +25,7 @@ func NewReviewPrAutomation(reviewPrFetcher ReviewPrFetcher, projectV2Setter Proj
 func (a *reviewPrAutomation) SetInProgress() error {
 	prs, err := a.reviewPrFetcher.UnReviewedPrs()
 	if err != nil {
-		return errors.Join(err)
+		return fmt.Errorf("failed to fetch unreviewed prs: %w", err)
 	}
 
 	categoryID := variables.REVIEW_PR_CATEGORY_ID
@@ -44,12 +45,12 @@ func (a *reviewPrAutomation) SetInProgress() error {
 func (a *reviewPrAutomation) SetInPending() error {
 	commentedPrs, err := a.reviewPrFetcher.CommentedPrs()
 	if err != nil {
-		return errors.Join(err)
+		return fmt.Errorf("failed to fetch commented prs: %w", err)
 	}
 
 	changesRequestedPrs, err := a.reviewPrFetcher.ChangesRequestedPrs()
 	if err != nil {
-		return errors.Join(err)
+		return fmt.Errorf("failed to fetch changes requested prs: %w", err)
 	}
 
 	prs := append(commentedPrs, changesRequestedPrs...)
@@ -72,7 +73,7 @@ func (a *reviewPrAutomation) SetInPending() error {
 func (a *reviewPrAutomation) SetComplete() error {
 	prs, err := a.reviewPrFetcher.ApprovedPrs()
 	if err != nil {
-		return errors.Join(err)
+		return fmt.Errorf("failed to fetch approved prs: %w", err)
 	}
 
 	categoryID := variables.REVIEW_PR_CATEGORY_ID

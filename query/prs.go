@@ -2,7 +2,7 @@ package query
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
 	"os/exec"
 
 	"github.com/igsr5/github-project-automation/usecase"
@@ -19,12 +19,12 @@ func NewPrFetcher() usecase.PrFetcher {
 func (f *prFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchDraftPRsCommand()
 	if err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to search draft prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
 	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to unmarshal draft prs: %w", err)
 	}
 
 	return prs, nil
@@ -34,12 +34,12 @@ func (f *prFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
 func (f *prFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchChangeRequestedPRsCommand()
 	if err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to search change requested prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
 	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to unmarshal change requested prs: %w", err)
 	}
 
 	return prs, nil
@@ -49,12 +49,12 @@ func (f *prFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
 func (f *prFetcherImpl) ReviewRequestedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchReviewRequestedPRsCommand()
 	if err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to search review requested prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
 	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to unmarshal review requested prs: %w", err)
 	}
 
 	return prs, nil
@@ -64,12 +64,12 @@ func (f *prFetcherImpl) ReviewRequestedPrs() ([]usecase.PullRequest, error) {
 func (f *prFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchApprovedPRsCommand()
 	if err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to search approved prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
 	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to unmarshal approved prs: %w", err)
 	}
 
 	return prs, nil

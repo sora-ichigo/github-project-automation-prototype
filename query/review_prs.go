@@ -2,7 +2,7 @@ package query
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
 	"os/exec"
 
 	"github.com/igsr5/github-project-automation/usecase"
@@ -19,12 +19,12 @@ func NewReviewPrFetcher() usecase.ReviewPrFetcher {
 func (f *reviewPrFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchUnReviewedPRCommand()
 	if err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to search unreviewed prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
 	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to unmarshal unreviewed prs: %w", err)
 	}
 
 	return prs, nil
@@ -34,12 +34,12 @@ func (f *reviewPrFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
 func (f *reviewPrFetcherImpl) CommentedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchCommentedReviewPRCommand()
 	if err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to search commented prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
 	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to unmarshal commented prs: %w", err)
 	}
 
 	// TODO: review-requested な PR が含まれている場合は除外する
@@ -51,12 +51,12 @@ func (f *reviewPrFetcherImpl) CommentedPrs() ([]usecase.PullRequest, error) {
 func (f *reviewPrFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchChangesRequestedReviewPRCommand()
 	if err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to search changes requested prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
 	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to unmarshal changes requested prs: %w", err)
 	}
 
 	// TODO: review-requested な PR が含まれている場合は除外する
@@ -68,12 +68,12 @@ func (f *reviewPrFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, erro
 func (f *reviewPrFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchApprovedReviewPRCommand()
 	if err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to search approved prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
 	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to unmarshal approved prs: %w", err)
 	}
 
 	return prs, nil

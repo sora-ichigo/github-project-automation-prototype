@@ -2,7 +2,7 @@ package query
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
 	"os/exec"
 
 	"github.com/igsr5/github-project-automation/usecase"
@@ -20,12 +20,12 @@ func NewIssueFetcher() usecase.IssueFetcher {
 func (f *issueFetcherImpl) MyIssues() ([]usecase.Issue, error) {
 	b, err := searchIssueCommand()
 	if err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to search issues: %w", err)
 	}
 
 	var issues []usecase.Issue
 	if err := json.Unmarshal(b, &issues); err != nil {
-		return nil, errors.Join(err)
+		return nil, fmt.Errorf("failed to unmarshal issues: %w", err)
 	}
 
 	return issues, nil
