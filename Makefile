@@ -1,4 +1,4 @@
-.PHONY: build clean test fmt lint generate
+.PHONY: build clean test generate
 
 build:
 	go build -o github-project-automation cmd/main.go
