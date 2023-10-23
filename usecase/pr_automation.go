@@ -42,7 +42,7 @@ func (a *prAutomationImpl) SetInProgress() error {
 	}
 
 	log.Printf("pr automation\n")
-	log.Printf("SetInProgress: %v\n", projectItems)
+	log.Printf("Found %d target prs in SetInProgress.\n", len(projectItems))
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }
@@ -63,7 +63,7 @@ func (a *prAutomationImpl) SetInPending() error {
 	}
 
 	log.Printf("pr automation\n")
-	log.Printf("SetInPending: %v", projectItems)
+	log.Printf("Found %d target prs in SetInPending.\n", len(projectItems))
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }
@@ -84,7 +84,7 @@ func (a *prAutomationImpl) SetComplete() error {
 	}
 
 	log.Printf("pr automation\n")
-	log.Printf("SetComplete: %v\n", projectItems)
+	log.Printf("Found %d target prs in SetComplete.\n", len(projectItems))
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }

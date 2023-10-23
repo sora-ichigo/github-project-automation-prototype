@@ -36,7 +36,7 @@ func (a *issueAutomationImpl) SetInProgress() error {
 	}
 
 	log.Printf("issues automation\n")
-	log.Printf("SetInProgress: %v\n", projectItems)
+	log.Printf("Found %d target issues in SetInProgress.\n", len(projectItems))
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }

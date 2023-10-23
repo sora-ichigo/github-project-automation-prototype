@@ -36,7 +36,7 @@ func (a *reviewPrAutomation) SetInProgress() error {
 	}
 
 	log.Printf("review pr automation\n")
-	log.Printf("SetInProgress: %v\n", projectItems)
+	log.Printf("Found %d target review prs in SetInProgress.\n", len(projectItems))
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
 }
@@ -63,7 +63,7 @@ func (a *reviewPrAutomation) SetInPending() error {
 	}
 
 	log.Printf("review pr automation\n")
-	log.Printf("SetInPending: %v\n", projectItems)
+	log.Printf("Found %d target review prs in SetInPending.\n", len(projectItems))
 
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 	return nil
@@ -84,7 +84,7 @@ func (a *reviewPrAutomation) SetComplete() error {
 	}
 
 	log.Printf("review pr automation\n")
-	log.Printf("SetComplete: %v\n", projectItems)
+	log.Printf("Found %d target review prs in SetComplete.\n", len(projectItems))
 	a.projectV2Setter.Set(categoryID, statusID, projectItems)
 
 	return nil
