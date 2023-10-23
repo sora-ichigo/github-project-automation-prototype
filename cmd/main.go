@@ -16,9 +16,9 @@ func main() {
 	prFetcher := query.NewPrFetcher()
 	reviewPrFetcher := query.NewReviewPrFetcher()
 	automations := []domain.Automation{
-		usecase.NewIssueAutomation(issueFetcher, projectV2Setter),
-		usecase.NewPrAutomation(prFetcher, projectV2Setter),
 		usecase.NewReviewPrAutomation(reviewPrFetcher, projectV2Setter),
+		usecase.NewPrAutomation(prFetcher, projectV2Setter),
+		usecase.NewIssueAutomation(issueFetcher, projectV2Setter),
 	}
 
 	for _, a := range automations {
