@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"log"
 	"os"
 
@@ -23,17 +24,17 @@ func main() {
 
 	for _, a := range automations {
 		if err := a.SetInProgress(); err != nil {
-			log.Printf("error occurred: %v", err)
+			log.Printf("error occurred: %v", errors.Unwrap(err))
 			os.Exit(1)
 		}
 
 		if err := a.SetInPending(); err != nil {
-			log.Printf("error occurred: %v", err)
+			log.Printf("error occurred: %v", errors.Unwrap(err))
 			os.Exit(1)
 		}
 
 		if err := a.SetComplete(); err != nil {
-			log.Printf("error occurred: %v", err)
+			log.Printf("error occurred: %v", errors.Unwrap(err))
 			os.Exit(1)
 		}
 	}
