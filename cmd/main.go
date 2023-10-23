@@ -23,17 +23,17 @@ func main() {
 
 	for _, a := range automations {
 		if err := a.SetInProgress(); err != nil {
-			log.Printf("%s: error occurred: %v", a, err)
+			log.Printf("%s: error occurred: %v", a, err.Error())
 			os.Exit(1)
 		}
 
 		if err := a.SetInPending(); err != nil {
-			log.Printf("%s : setInPending : error occurred: %v", a, err)
+			log.Printf("%s : setInPending : error occurred: %v", a, err.Error())
 			os.Exit(1)
 		}
 
 		if err := a.SetComplete(); err != nil {
-			log.Printf("%s : SetComplete : error occurred: %v", a, err)
+			log.Printf("%s : SetComplete : error occurred: %v", a, err.Error())
 			os.Exit(1)
 		}
 	}
