@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -8,13 +9,35 @@ import (
 	"github.com/igsr5/github-project-automation/domain"
 	"github.com/igsr5/github-project-automation/query"
 	"github.com/igsr5/github-project-automation/usecase"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
-	err := run()
-	if err != nil {
-		log.Printf("error: %v", err)
+	e := echo.New()
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
+	e.POST("/run", func(c echo.Context) error {
+		err := run()
+		if err != nil {
+			log.Printf("error: %v", err)
+			return c.String(500, "error")
+		}
+
+		return c.String(200, "ok")
+	})
+
+	e.GET("/ping", func(c echo.Context) error {
+		return c.String(200, "ok")
+	})
+
+	port := os.Getenv("APP_PORT")
+	if port == "" {
+		port = "8080"
 	}
+
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", port)))
 }
 
 func run() error {
@@ -41,4 +64,5 @@ func run() error {
 			return fmt.Errorf("automations is failed: %v", err)
 		}
 	}
+	return nil
 }
