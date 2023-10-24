@@ -22,12 +22,6 @@ jobs:
 
       - name: Build
         run: make build
-
-      - name: Test
-        run: make test
-
-      - name: Go-linter
-        uses: Jerome1337/golint-action@v1.0.3
   test:
     runs-on: ubuntu-latest
     steps:
