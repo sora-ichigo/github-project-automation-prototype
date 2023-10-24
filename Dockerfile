@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y git \
 # Set the working directory
 WORKDIR /app
 
+ENV APP_PORT=80
+
 # Copy the source code
 COPY . .
 
