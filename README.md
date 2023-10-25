@@ -1,1 +1,2 @@
-# github-project-automation
+# github-project-automation [prototype]
+
