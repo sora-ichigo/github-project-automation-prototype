@@ -18,8 +18,29 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.POST("/run", func(c echo.Context) error {
-		err := run()
+	e.POST("/issues", func(c echo.Context) error {
+		err := run("issues")
+		if err != nil {
+			log.Printf("error: %v", err)
+			return c.String(500, "error")
+		}
+
+		return c.String(200, "ok")
+
+	})
+
+	e.POST("/pull_requests", func(c echo.Context) error {
+		err := run("pull_requests")
+		if err != nil {
+			log.Printf("error: %v", err)
+			return c.String(500, "error")
+		}
+
+		return c.String(200, "ok")
+	})
+
+	e.POST("/review_pull_requests", func(c echo.Context) error {
+		err := run("review_pull_requests")
 		if err != nil {
 			log.Printf("error: %v", err)
 			return c.String(500, "error")
@@ -40,29 +61,35 @@ func main() {
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", port)))
 }
 
-func run() error {
+func run(mode string) error {
 	projectV2Setter := command.NewProjectV2Setter()
 	issueFetcher := query.NewIssueFetcher()
 	prFetcher := query.NewPrFetcher()
 	reviewPrFetcher := query.NewReviewPrFetcher()
-	automations := []domain.Automation{
-		usecase.NewReviewPrAutomation(reviewPrFetcher, projectV2Setter),
-		usecase.NewPrAutomation(prFetcher, projectV2Setter),
-		usecase.NewIssueAutomation(issueFetcher, projectV2Setter),
+
+	var a domain.Automation
+
+	if mode == "issues" {
+		a = usecase.NewIssueAutomation(issueFetcher, projectV2Setter)
+	} else if mode == "pull_requests" {
+		a = usecase.NewPrAutomation(prFetcher, projectV2Setter)
+	} else if mode == "review_pull_requests" {
+		a = usecase.NewReviewPrAutomation(reviewPrFetcher, projectV2Setter)
+	} else {
+		return fmt.Errorf("invalid mode: %s", mode)
 	}
 
-	for _, a := range automations {
-		if err := a.SetInProgress(); err != nil {
-			return fmt.Errorf("automations is failed: %v", err)
-		}
-
-		if err := a.SetInPending(); err != nil {
-			return fmt.Errorf("automations is failed: %v", err)
-		}
-
-		if err := a.SetComplete(); err != nil {
-			return fmt.Errorf("automations is failed: %v", err)
-		}
+	if err := a.SetInProgress(); err != nil {
+		return fmt.Errorf("automations is failed: %v", err)
 	}
+
+	if err := a.SetInPending(); err != nil {
+		return fmt.Errorf("automations is failed: %v", err)
+	}
+
+	if err := a.SetComplete(); err != nil {
+		return fmt.Errorf("automations is failed: %v", err)
+	}
+
 	return nil
 }
