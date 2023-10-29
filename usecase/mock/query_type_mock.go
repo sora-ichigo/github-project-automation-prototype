@@ -91,34 +91,19 @@ func (mr *MockPrFetcherMockRecorder) ApprovedPrs() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApprovedPrs", reflect.TypeOf((*MockPrFetcher)(nil).ApprovedPrs))
 }
 
-// ChangesRequestedPrs mocks base method.
-func (m *MockPrFetcher) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
+// ReviewedPrs mocks base method.
+func (m *MockPrFetcher) ReviewedPrs() ([]usecase.PullRequest, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ChangesRequestedPrs")
+	ret := m.ctrl.Call(m, "ReviewedPrs")
 	ret0, _ := ret[0].([]usecase.PullRequest)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ChangesRequestedPrs indicates an expected call of ChangesRequestedPrs.
-func (mr *MockPrFetcherMockRecorder) ChangesRequestedPrs() *gomock.Call {
+// ReviewedPrs indicates an expected call of ReviewedPrs.
+func (mr *MockPrFetcherMockRecorder) ReviewedPrs() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangesRequestedPrs", reflect.TypeOf((*MockPrFetcher)(nil).ChangesRequestedPrs))
-}
-
-// ReviewRequestedPrs mocks base method.
-func (m *MockPrFetcher) ReviewRequestedPrs() ([]usecase.PullRequest, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReviewRequestedPrs")
-	ret0, _ := ret[0].([]usecase.PullRequest)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ReviewRequestedPrs indicates an expected call of ReviewRequestedPrs.
-func (mr *MockPrFetcherMockRecorder) ReviewRequestedPrs() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReviewRequestedPrs", reflect.TypeOf((*MockPrFetcher)(nil).ReviewRequestedPrs))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReviewedPrs", reflect.TypeOf((*MockPrFetcher)(nil).ReviewedPrs))
 }
 
 // UnReviewedPrs mocks base method.
@@ -174,34 +159,19 @@ func (mr *MockReviewPrFetcherMockRecorder) ApprovedPrs() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApprovedPrs", reflect.TypeOf((*MockReviewPrFetcher)(nil).ApprovedPrs))
 }
 
-// ChangesRequestedPrs mocks base method.
-func (m *MockReviewPrFetcher) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
+// ReviewedPrs mocks base method.
+func (m *MockReviewPrFetcher) ReviewedPrs() ([]usecase.PullRequest, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ChangesRequestedPrs")
+	ret := m.ctrl.Call(m, "ReviewedPrs")
 	ret0, _ := ret[0].([]usecase.PullRequest)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ChangesRequestedPrs indicates an expected call of ChangesRequestedPrs.
-func (mr *MockReviewPrFetcherMockRecorder) ChangesRequestedPrs() *gomock.Call {
+// ReviewedPrs indicates an expected call of ReviewedPrs.
+func (mr *MockReviewPrFetcherMockRecorder) ReviewedPrs() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangesRequestedPrs", reflect.TypeOf((*MockReviewPrFetcher)(nil).ChangesRequestedPrs))
-}
-
-// CommentedPrs mocks base method.
-func (m *MockReviewPrFetcher) CommentedPrs() ([]usecase.PullRequest, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CommentedPrs")
-	ret0, _ := ret[0].([]usecase.PullRequest)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CommentedPrs indicates an expected call of CommentedPrs.
-func (mr *MockReviewPrFetcherMockRecorder) CommentedPrs() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CommentedPrs", reflect.TypeOf((*MockReviewPrFetcher)(nil).CommentedPrs))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReviewedPrs", reflect.TypeOf((*MockReviewPrFetcher)(nil).ReviewedPrs))
 }
 
 // UnReviewedPrs mocks base method.

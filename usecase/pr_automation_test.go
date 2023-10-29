@@ -24,7 +24,6 @@ func TestPrAutomationSetInProgress(t *testing.T) {
 
 	// Expected calls
 	mockPrFetcher.EXPECT().UnReviewedPrs().Return(expectedPRs, nil).Times(1)
-	mockPrFetcher.EXPECT().ChangesRequestedPrs().Return(expectedPRs, nil).Times(1)
 	mockProjectV2Setter.EXPECT().Set(variables.PR_CATEGORY_ID, variables.IN_PROGRESS_STATUS_ID, gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks
@@ -54,7 +53,7 @@ func TestPrAutomationSetInPending(t *testing.T) {
 	}
 
 	// Expected calls
-	mockPrFetcher.EXPECT().ReviewRequestedPrs().Return(expectedPRs, nil).Times(1)
+	mockPrFetcher.EXPECT().ReviewedPrs().Return(expectedPRs, nil).Times(1)
 	mockProjectV2Setter.EXPECT().Set(variables.PR_CATEGORY_ID, variables.IN_PENDING_STATUS_ID, gomock.Any()).Return(nil).Times(1)
 
 	// Initialize the struct with mocks

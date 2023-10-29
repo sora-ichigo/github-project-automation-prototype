@@ -20,15 +20,13 @@ type IssueFetcher interface {
 // PrFetcher is an interface for fetching pull requests.
 type PrFetcher interface {
 	UnReviewedPrs() ([]PullRequest, error)
-	ChangesRequestedPrs() ([]PullRequest, error)
-	ReviewRequestedPrs() ([]PullRequest, error)
+	ReviewedPrs() ([]PullRequest, error)
 	ApprovedPrs() ([]PullRequest, error)
 }
 
 // ReviewPrFetcher is an interface for fetching pull requests that are requested to review.
 type ReviewPrFetcher interface {
 	UnReviewedPrs() ([]PullRequest, error)
-	CommentedPrs() ([]PullRequest, error)
-	ChangesRequestedPrs() ([]PullRequest, error)
+	ReviewedPrs() ([]PullRequest, error)
 	ApprovedPrs() ([]PullRequest, error)
 }

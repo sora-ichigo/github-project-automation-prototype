@@ -31,7 +31,7 @@ func (f *prFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
 }
 
 // ChangesRequestedPrs returns a list of pull requests that are requested to change.
-func (f *prFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
+func (f *prFetcherImpl) ReviewedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchChangeRequestedPRsCommand()
 	if err != nil {
 		return nil, fmt.Errorf("failed to search change requested prs: %w", err)
@@ -40,21 +40,6 @@ func (f *prFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
 	var prs []usecase.PullRequest
 	if err := json.Unmarshal(b, &prs); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal change requested prs: %w", err)
-	}
-
-	return prs, nil
-}
-
-// ReviewRequestedPrs returns a list of pull requests that are requested to review.
-func (f *prFetcherImpl) ReviewRequestedPrs() ([]usecase.PullRequest, error) {
-	b, err := searchReviewRequestedPRsCommand()
-	if err != nil {
-		return nil, fmt.Errorf("failed to search review requested prs: %w", err)
-	}
-
-	var prs []usecase.PullRequest
-	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal review requested prs: %w", err)
 	}
 
 	return prs, nil
@@ -93,18 +78,6 @@ func searchDraftPRsCommand() ([]byte, error) {
 // - review: changes_requested
 func searchChangeRequestedPRsCommand() ([]byte, error) {
 	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--review", "changes_requested", "--limit", "100", "--json", "url")
-	output, err := cmd.Output()
-	return output, err
-}
-
-// Search query:
-// - owner: wantedly
-// - assignee: @me
-// - state: open
-// - review: none
-// - draft: 0
-func searchReviewRequestedPRsCommand() ([]byte, error) {
-	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--review", "none", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
 	return output, err
 }

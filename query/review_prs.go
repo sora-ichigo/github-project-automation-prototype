@@ -31,7 +31,7 @@ func (f *reviewPrFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
 }
 
 // CommentedPrs returns a list of pull requests that are commented.
-func (f *reviewPrFetcherImpl) CommentedPrs() ([]usecase.PullRequest, error) {
+func (f *reviewPrFetcherImpl) ReviewedPrs() ([]usecase.PullRequest, error) {
 	b, err := searchCommentedReviewPRCommand()
 	if err != nil {
 		return nil, fmt.Errorf("failed to search commented prs: %w", err)
@@ -40,23 +40,6 @@ func (f *reviewPrFetcherImpl) CommentedPrs() ([]usecase.PullRequest, error) {
 	var prs []usecase.PullRequest
 	if err := json.Unmarshal(b, &prs); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal commented prs: %w", err)
-	}
-
-	// TODO: review-requested な PR が含まれている場合は除外する
-
-	return prs, nil
-}
-
-// ChangesRequestedPrs returns a list of pull requests that are requested to change.
-func (f *reviewPrFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
-	b, err := searchChangesRequestedReviewPRCommand()
-	if err != nil {
-		return nil, fmt.Errorf("failed to search changes requested prs: %w", err)
-	}
-
-	var prs []usecase.PullRequest
-	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal changes requested prs: %w", err)
 	}
 
 	// TODO: review-requested な PR が含まれている場合は除外する
@@ -97,17 +80,6 @@ func searchUnReviewedPRCommand() ([]byte, error) {
 // - no-assignee: @me
 func searchCommentedReviewPRCommand() ([]byte, error) {
 	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--state", "open", "--reviewed-by", "@me", "--review", "none", "--no-assignee", "@me", "--limit", "100", "--json", "url")
-	output, err := cmd.Output()
-	return output, err
-}
-
-// Search query:
-// - owner: wantedly
-// - state: open
-// - review: changes_requested
-// - reviewed-by: @me
-func searchChangesRequestedReviewPRCommand() ([]byte, error) {
-	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--state", "open", "--review", "changes_requested", "--reviewed-by", "@me", "--limit", "100", "--json", "url")
 	output, err := cmd.Output()
 	return output, err
 }

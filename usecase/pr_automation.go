@@ -23,15 +23,10 @@ func NewPrAutomation(prFetcher PrFetcher, projectV2Setter ProjectV2Setter) domai
 
 // SetInProgress sets pull requests that are in progress.
 func (a *prAutomationImpl) SetInProgress() error {
-	unReviewedPrs, err := a.prFetcher.UnReviewedPrs()
+	prs, err := a.prFetcher.UnReviewedPrs()
 	if err != nil {
 		return fmt.Errorf("PRAutomation SetInProgress is failed: %w", err)
 	}
-	changesRequestedPrs, err := a.prFetcher.ChangesRequestedPrs()
-	if err != nil {
-		return fmt.Errorf("PRAutomation SetInProgress is failed: %w", err)
-	}
-	prs := append(unReviewedPrs, changesRequestedPrs...)
 
 	categoryID := variables.PR_CATEGORY_ID
 	statusID := variables.IN_PROGRESS_STATUS_ID
@@ -49,7 +44,7 @@ func (a *prAutomationImpl) SetInProgress() error {
 
 // SetInPending sets pull requests that are requested to review.
 func (a *prAutomationImpl) SetInPending() error {
-	prs, err := a.prFetcher.ReviewRequestedPrs()
+	prs, err := a.prFetcher.ReviewedPrs()
 	if err != nil {
 		return fmt.Errorf("PRAutomation SetInPending is failed: %w", err)
 	}

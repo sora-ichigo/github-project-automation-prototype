@@ -42,17 +42,10 @@ func (a *reviewPrAutomation) SetInProgress() error {
 }
 
 func (a *reviewPrAutomation) SetInPending() error {
-	commentedPrs, err := a.reviewPrFetcher.CommentedPrs()
+	prs, err := a.reviewPrFetcher.ReviewedPrs()
 	if err != nil {
 		return fmt.Errorf("ReviewPRAutomation SetInPending is failed: %w", err)
 	}
-
-	changesRequestedPrs, err := a.reviewPrFetcher.ChangesRequestedPrs()
-	if err != nil {
-		return fmt.Errorf("ReviewPRAutomation SetInPending is failed: %w", err)
-	}
-
-	prs := append(commentedPrs, changesRequestedPrs...)
 
 	categoryID := variables.REVIEW_PR_CATEGORY_ID
 	statusID := variables.IN_PENDING_STATUS_ID
