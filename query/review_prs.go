@@ -17,63 +17,44 @@ func NewReviewPrFetcher() usecase.ReviewPrFetcher {
 
 // UnReviewedPrs returns a list of pull requests that are not reviewed.
 func (f *reviewPrFetcherImpl) UnReviewedPrs() ([]usecase.PullRequest, error) {
-	b, err := searchUnReviewedPRCommand()
+	res, err := searchUnReviewedPRCommand()
 	if err != nil {
 		return nil, fmt.Errorf("failed to search unreviewed prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
-	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal unreviewed prs: %w", err)
+	for _, item := range res.Items {
+		prs = append(prs, usecase.PullRequest{URL: item.HTMLURL})
 	}
 
 	return prs, nil
 }
 
 // CommentedPrs returns a list of pull requests that are commented.
-func (f *reviewPrFetcherImpl) CommentedPrs() ([]usecase.PullRequest, error) {
-	b, err := searchCommentedReviewPRCommand()
+func (f *reviewPrFetcherImpl) ReviewedPrs() ([]usecase.PullRequest, error) {
+	res, err := searchCommentedReviewPRCommand()
 	if err != nil {
 		return nil, fmt.Errorf("failed to search commented prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
-	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal commented prs: %w", err)
+	for _, item := range res.Items {
+		prs = append(prs, usecase.PullRequest{URL: item.HTMLURL})
 	}
-
-	// TODO: review-requested な PR が含まれている場合は除外する
-
-	return prs, nil
-}
-
-// ChangesRequestedPrs returns a list of pull requests that are requested to change.
-func (f *reviewPrFetcherImpl) ChangesRequestedPrs() ([]usecase.PullRequest, error) {
-	b, err := searchChangesRequestedReviewPRCommand()
-	if err != nil {
-		return nil, fmt.Errorf("failed to search changes requested prs: %w", err)
-	}
-
-	var prs []usecase.PullRequest
-	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal changes requested prs: %w", err)
-	}
-
-	// TODO: review-requested な PR が含まれている場合は除外する
 
 	return prs, nil
 }
 
 // ApprovedPrs returns a list of pull requests that are approved.
 func (f *reviewPrFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
-	b, err := searchApprovedReviewPRCommand()
+	res, err := searchApprovedReviewPRCommand()
 	if err != nil {
 		return nil, fmt.Errorf("failed to search approved prs: %w", err)
 	}
 
 	var prs []usecase.PullRequest
-	if err := json.Unmarshal(b, &prs); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal approved prs: %w", err)
+	for _, item := range res.Items {
+		prs = append(prs, usecase.PullRequest{URL: item.HTMLURL})
 	}
 
 	return prs, nil
@@ -82,34 +63,36 @@ func (f *reviewPrFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 // Search query:
 // - owner: wantedly
 // - state: open
-// - review-requested: @me
-func searchUnReviewedPRCommand() ([]byte, error) {
-	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--state", "open", "--review-requested", "@me", "--limit", "100", "--json", "url")
-	output, err := cmd.Output()
-	return output, err
-}
-
-// Search query:
-// - owner: wantedly
-// - state: open
 // - review: none
-// - reviewed-by: @me
-// - no-assignee: @me
-func searchCommentedReviewPRCommand() ([]byte, error) {
-	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--state", "open", "--reviewed-by", "@me", "--review", "none", "--no-assignee", "@me", "--limit", "100", "--json", "url")
+// - review-requested: igsr5
+func searchUnReviewedPRCommand() (*SearchQueryResponse, error) {
+	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+review-requested:igsr5")
 	output, err := cmd.Output()
-	return output, err
+
+	var res SearchQueryResponse
+	if err := json.Unmarshal(output, &res); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal unreviewed prs: %w", err)
+	}
+
+	return &res, err
 }
 
 // Search query:
 // - owner: wantedly
 // - state: open
-// - review: changes_requested
-// - reviewed-by: @me
-func searchChangesRequestedReviewPRCommand() ([]byte, error) {
-	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--state", "open", "--review", "changes_requested", "--reviewed-by", "@me", "--limit", "100", "--json", "url")
+// - reviewed-by: igsr5
+// - -assignee: igsr5
+// - -review: approved
+func searchCommentedReviewPRCommand() (*SearchQueryResponse, error) {
+	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:igsr5+-assignee:igsr5+-review:approved")
 	output, err := cmd.Output()
-	return output, err
+
+	var res SearchQueryResponse
+	if err := json.Unmarshal(output, &res); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal commented prs: %w", err)
+	}
+
+	return &res, err
 }
 
 // Search query:
@@ -117,8 +100,16 @@ func searchChangesRequestedReviewPRCommand() ([]byte, error) {
 // - state: open
 // - review: approved
 // - reviewed-by: @me
-func searchApprovedReviewPRCommand() ([]byte, error) {
-	cmd := exec.Command("gh", "search", "prs", "--owner", "wantedly", "--state", "open", "--reviewed-by", "@me", "--review", "approved", "--limit", "100", "--json", "url")
+func searchApprovedReviewPRCommand() (*SearchQueryResponse, error) {
+	// gh api "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:igsr5+-assignee:igsr5+review:approved"
+	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:igsr5+-assignee:igsr5+review:approved")
+
 	output, err := cmd.Output()
-	return output, err
+
+	var res SearchQueryResponse
+	if err := json.Unmarshal(output, &res); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal approved prs: %w", err)
+	}
+
+	return &res, err
 }
