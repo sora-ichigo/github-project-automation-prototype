@@ -18,25 +18,32 @@ func NewIssueFetcher() usecase.IssueFetcher {
 
 // MyIssues returns issues assigned to me.
 func (f *issueFetcherImpl) MyIssues() ([]usecase.Issue, error) {
-	b, err := searchIssueCommand()
+	res, err := searchIssueCommand()
 	if err != nil {
 		return nil, fmt.Errorf("failed to search issues: %w", err)
 	}
 
 	var issues []usecase.Issue
-	if err := json.Unmarshal(b, &issues); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal issues: %w", err)
+	for _, item := range res.Items {
+		issues = append(issues, usecase.Issue{URL: item.HTMLURL})
 	}
 
 	return issues, nil
 }
 
 // Search query:
-// - owner: wantedly
-// - assignee: @me
-// - state: open
-func searchIssueCommand() ([]byte, error) {
-	cmd := exec.Command("gh", "search", "issues", "--owner", "wantedly", "--assignee", "@me", "--state", "open", "--limit", "100", "--json", "url")
+// - assignee:igsr5
+// - is:open
+// - owner:wantedly
+// - type:issue
+func searchIssueCommand() (*SearchQueryResponse, error) {
+	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:@me+is:open+owner:wantedly+type:issue")
 	output, err := cmd.Output()
-	return output, err
+
+	var res SearchQueryResponse
+	if err := json.Unmarshal(output, &res); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal issues: %w", err)
+	}
+
+	return &res, err
 }
