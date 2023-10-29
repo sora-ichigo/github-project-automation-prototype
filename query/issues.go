@@ -39,6 +39,9 @@ func (f *issueFetcherImpl) MyIssues() ([]usecase.Issue, error) {
 func searchIssueCommand() (*SearchQueryResponse, error) {
 	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:@me+is:open+owner:wantedly+type:issue")
 	output, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf("failed to execute gh api command: %w", err)
+	}
 
 	var res SearchQueryResponse
 	if err := json.Unmarshal(output, &res); err != nil {
