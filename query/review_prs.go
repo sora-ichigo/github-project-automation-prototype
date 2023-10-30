@@ -83,8 +83,9 @@ func searchUnReviewedPRCommand() (*SearchQueryResponse, error) {
 // - reviewed-by: igsr5
 // - -assignee: igsr5
 // - -review: approved
+// - -review-requested: igsr5
 func searchCommentedReviewPRCommand() (*SearchQueryResponse, error) {
-	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:igsr5+-assignee:igsr5+-review:approved")
+	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:igsr5+-assignee:igsr5+-review:approved+-review-requested:igsr5")
 	output, err := cmd.Output()
 
 	var res SearchQueryResponse
