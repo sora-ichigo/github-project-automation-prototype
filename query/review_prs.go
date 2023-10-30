@@ -102,7 +102,6 @@ func searchCommentedReviewPRCommand() (*SearchQueryResponse, error) {
 // - review: approved
 // - reviewed-by: @me
 func searchApprovedReviewPRCommand() (*SearchQueryResponse, error) {
-	// gh api "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:igsr5+-assignee:igsr5+review:approved"
 	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:igsr5+-assignee:igsr5+review:approved")
 
 	output, err := cmd.Output()
