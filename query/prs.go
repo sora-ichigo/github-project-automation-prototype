@@ -66,9 +66,10 @@ func (f *prFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 // - owner:wantedly
 // - type:pr
 // - review:none
+// - draft:true
 func searchUnReviewedPRsCommand() (*SearchQueryResponse, error) {
 	// gh api "/search/issues?q=assignee:igsr5+is:open+owner:wantedly+type:pr+review:none"
-	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:igsr5+is:open+owner:wantedly+type:pr+review:none")
+	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:igsr5+is:open+owner:wantedly+type:pr+review:none+draft:true")
 	output, err := cmd.Output()
 	if err != nil {
 		return nil, fmt.Errorf("failed to execute gh api command: %w", err)
@@ -86,10 +87,10 @@ func searchUnReviewedPRsCommand() (*SearchQueryResponse, error) {
 // - is:open
 // - owner:wantedly
 // - type:pr
-// - -review:none
 // - -review:approved
+// - draft:false
 func searchReviewedPRsCommand() (*SearchQueryResponse, error) {
-	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:igsr5+is:open+owner:wantedly+type:pr+-review:none+-review:approved")
+	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:igsr5+is:open+owner:wantedly+type:pr+draft:false+-review:approved")
 	output, err := cmd.Output()
 
 	var res SearchQueryResponse
