@@ -37,7 +37,12 @@ func (a *reviewPrAutomation) SetInProgress() error {
 
 	log.Printf("review pr automation\n")
 	log.Printf("Found %d target review prs in SetInProgress.\n", len(projectItems))
-	a.projectV2Setter.Set(categoryID, statusID, projectItems)
+
+	err = a.projectV2Setter.Set(categoryID, statusID, projectItems)
+	if err != nil {
+		return fmt.Errorf("ReviewPRAutomation SetInProgress is failed: %w", err)
+	}
+
 	return nil
 }
 
@@ -58,7 +63,11 @@ func (a *reviewPrAutomation) SetInPending() error {
 	log.Printf("review pr automation\n")
 	log.Printf("Found %d target review prs in SetInPending.\n", len(projectItems))
 
-	a.projectV2Setter.Set(categoryID, statusID, projectItems)
+	err = a.projectV2Setter.Set(categoryID, statusID, projectItems)
+	if err != nil {
+		return fmt.Errorf("ReviewPRAutomation SetInPending is failed: %w", err)
+	}
+
 	return nil
 }
 
@@ -78,7 +87,11 @@ func (a *reviewPrAutomation) SetComplete() error {
 
 	log.Printf("review pr automation\n")
 	log.Printf("Found %d target review prs in SetComplete.\n", len(projectItems))
-	a.projectV2Setter.Set(categoryID, statusID, projectItems)
+
+	err = a.projectV2Setter.Set(categoryID, statusID, projectItems)
+	if err != nil {
+		return fmt.Errorf("ReviewPRAutomation SetInComplete is failed: %w", err)
+	}
 
 	return nil
 }

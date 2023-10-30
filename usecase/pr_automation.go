@@ -38,7 +38,12 @@ func (a *prAutomationImpl) SetInProgress() error {
 
 	log.Printf("pr automation\n")
 	log.Printf("Found %d target prs in SetInProgress.\n", len(projectItems))
-	a.projectV2Setter.Set(categoryID, statusID, projectItems)
+
+	err = a.projectV2Setter.Set(categoryID, statusID, projectItems)
+	if err != nil {
+		return fmt.Errorf("PRAutomation SetInProgress is failed: %w", err)
+	}
+
 	return nil
 }
 
@@ -59,7 +64,12 @@ func (a *prAutomationImpl) SetInPending() error {
 
 	log.Printf("pr automation\n")
 	log.Printf("Found %d target prs in SetInPending.\n", len(projectItems))
-	a.projectV2Setter.Set(categoryID, statusID, projectItems)
+
+	err = a.projectV2Setter.Set(categoryID, statusID, projectItems)
+	if err != nil {
+		return fmt.Errorf("PRAutomation SetInPending is failed: %w", err)
+	}
+
 	return nil
 }
 
@@ -80,6 +90,10 @@ func (a *prAutomationImpl) SetComplete() error {
 
 	log.Printf("pr automation\n")
 	log.Printf("Found %d target prs in SetComplete.\n", len(projectItems))
-	a.projectV2Setter.Set(categoryID, statusID, projectItems)
+
+	err = a.projectV2Setter.Set(categoryID, statusID, projectItems)
+	if err != nil {
+		return fmt.Errorf("PRAutomation SetComplete is failed: %w", err)
+	}
 	return nil
 }

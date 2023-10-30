@@ -23,6 +23,7 @@ func NewProjectV2Setter() usecase.ProjectV2Setter {
 
 // Set sets project items.
 func (s *projectV2SetterImpl) Set(categoryID string, statusID string, projectItems []usecase.ProjectItem) error {
+	fmt.Printf("projectItems: %v\n", projectItems)
 	// 1. Add project items
 	items := make([]Item, 0, len(projectItems))
 	for _, item := range projectItems {
@@ -33,6 +34,7 @@ func (s *projectV2SetterImpl) Set(categoryID string, statusID string, projectIte
 		items = append(items, *item)
 	}
 
+	fmt.Printf("items: %v\n", items)
 	// 2. Move project item status to specified status
 	for _, id := range items {
 		err := moveStatusProjectItem(id, statusID)

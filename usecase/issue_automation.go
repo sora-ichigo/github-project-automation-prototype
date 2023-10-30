@@ -37,7 +37,10 @@ func (a *issueAutomationImpl) SetInProgress() error {
 
 	log.Printf("issues automation\n")
 	log.Printf("Found %d target issues in SetInProgress.\n", len(projectItems))
-	a.projectV2Setter.Set(categoryID, statusID, projectItems)
+	err = a.projectV2Setter.Set(categoryID, statusID, projectItems)
+	if err != nil {
+		return fmt.Errorf("IssueAutomation SetInProgress is failed: %w", err)
+	}
 	return nil
 }
 
