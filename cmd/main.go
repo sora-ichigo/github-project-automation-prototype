@@ -49,6 +49,28 @@ func main() {
 		return c.String(200, "ok")
 	})
 
+	e.POST("/all", func(c echo.Context) error {
+		err := run("issues")
+		if err != nil {
+			log.Printf("error: %v", err)
+			return c.String(500, "error")
+		}
+
+		err = run("pull_requests")
+		if err != nil {
+			log.Printf("error: %v", err)
+			return c.String(500, "error")
+		}
+
+		err = run("review_pull_requests")
+		if err != nil {
+			log.Printf("error: %v", err)
+			return c.String(500, "error")
+		}
+
+		return c.String(200, "ok")
+	})
+
 	e.GET("/ping", func(c echo.Context) error {
 		return c.String(200, "ok")
 	})
