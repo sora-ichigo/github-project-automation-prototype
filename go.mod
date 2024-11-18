@@ -1,10 +1,12 @@
 module github.com/igsr5/github-project-automation
 
-go 1.21.0
+go 1.22
+
+toolchain go1.23.3
 
 require (
 	github.com/labstack/echo/v4 v4.11.2
-	go.uber.org/mock v0.3.0
+	go.uber.org/mock v0.5.0
 )
 
 require (
