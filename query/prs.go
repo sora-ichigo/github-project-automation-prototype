@@ -3,6 +3,7 @@ package query
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os/exec"
 
 	"github.com/sora-ichigo/github-project-automation/usecase"
@@ -71,6 +72,7 @@ func searchUnReviewedPRsCommand() (*SearchQueryResponse, error) {
 	// gh api "/search/issues?q=assignee:sora-ichigo+is:open+owner:wantedly+type:pr+review:none"
 	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:sora-ichigo+is:open+owner:wantedly+type:pr+review:none+draft:true")
 	output, err := cmd.Output()
+	log.Printf("output: %s", output)
 	if err != nil {
 		return nil, fmt.Errorf("failed to execute gh api command: %w", err)
 	}
