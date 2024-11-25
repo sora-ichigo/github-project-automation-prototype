@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/igsr5/github-project-automation/usecase"
+	"github.com/sora-ichigo/github-project-automation/usecase"
 )
 
 type prFetcherImpl struct{}
@@ -61,15 +61,15 @@ func (f *prFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 }
 
 // Search query:
-// - assignee:igsr5
+// - assignee:sora-ichigo
 // - is:open
 // - owner:wantedly
 // - type:pr
 // - review:none
 // - draft:true
 func searchUnReviewedPRsCommand() (*SearchQueryResponse, error) {
-	// gh api "/search/issues?q=assignee:igsr5+is:open+owner:wantedly+type:pr+review:none"
-	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:igsr5+is:open+owner:wantedly+type:pr+review:none+draft:true")
+	// gh api "/search/issues?q=assignee:sora-ichigo+is:open+owner:wantedly+type:pr+review:none"
+	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:sora-ichigo+is:open+owner:wantedly+type:pr+review:none+draft:true")
 	output, err := cmd.Output()
 	if err != nil {
 		return nil, fmt.Errorf("failed to execute gh api command: %w", err)
@@ -83,14 +83,14 @@ func searchUnReviewedPRsCommand() (*SearchQueryResponse, error) {
 }
 
 // Search query:
-// - assignee:igsr5
+// - assignee:sora-ichigo
 // - is:open
 // - owner:wantedly
 // - type:pr
 // - -review:approved
 // - draft:false
 func searchReviewedPRsCommand() (*SearchQueryResponse, error) {
-	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:igsr5+is:open+owner:wantedly+type:pr+draft:false+-review:approved")
+	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:sora-ichigo+is:open+owner:wantedly+type:pr+draft:false+-review:approved")
 	output, err := cmd.Output()
 
 	var res SearchQueryResponse
@@ -102,14 +102,14 @@ func searchReviewedPRsCommand() (*SearchQueryResponse, error) {
 }
 
 // Search query: Approved のレビューがあるPR
-// - assignee:igsr5
+// - assignee:sora-ichigo
 // - is:open
 // - owner:wantedly
 // - type:pr
 // - review:approved
 func searchApprovedPRsCommand() (*SearchQueryResponse, error) {
-	// gh api "/search/issues?q=assignee:igsr5+is:open+owner:wantedly+type:pr+review:approved"
-	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:igsr5+is:open+owner:wantedly+type:pr+review:approved")
+	// gh api "/search/issues?q=assignee:sora-ichigo+is:open+owner:wantedly+type:pr+review:approved"
+	cmd := exec.Command("gh", "api", "/search/issues?q=assignee:sora-ichigo+is:open+owner:wantedly+type:pr+review:approved")
 	output, err := cmd.Output()
 
 	var res SearchQueryResponse

@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	"github.com/igsr5/github-project-automation/command"
-	"github.com/igsr5/github-project-automation/domain"
-	"github.com/igsr5/github-project-automation/query"
-	"github.com/igsr5/github-project-automation/usecase"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/sora-ichigo/github-project-automation/command"
+	"github.com/sora-ichigo/github-project-automation/domain"
+	"github.com/sora-ichigo/github-project-automation/query"
+	"github.com/sora-ichigo/github-project-automation/usecase"
 )
 
 func main() {

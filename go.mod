@@ -1,4 +1,4 @@
-module github.com/igsr5/github-project-automation
+module github.com/sora-ichigo/github-project-automation
 
 go 1.21.0
 

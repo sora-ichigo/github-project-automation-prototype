@@ -11,7 +11,7 @@ package mock
 import (
 	reflect "reflect"
 
-	usecase "github.com/igsr5/github-project-automation/usecase"
+	usecase "github.com/sora-ichigo/github-project-automation/usecase"
 	gomock "go.uber.org/mock/gomock"
 )
 

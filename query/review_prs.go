@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/igsr5/github-project-automation/usecase"
+	"github.com/sora-ichigo/github-project-automation/usecase"
 )
 
 type reviewPrFetcherImpl struct{}
@@ -64,9 +64,9 @@ func (f *reviewPrFetcherImpl) ApprovedPrs() ([]usecase.PullRequest, error) {
 // - owner: wantedly
 // - state: open
 // - review: none
-// - review-requested: igsr5
+// - review-requested: sora-ichigo
 func searchUnReviewedPRCommand() (*SearchQueryResponse, error) {
-	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+review-requested:igsr5")
+	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+review-requested:sora-ichigo")
 	output, err := cmd.Output()
 
 	var res SearchQueryResponse
@@ -80,12 +80,12 @@ func searchUnReviewedPRCommand() (*SearchQueryResponse, error) {
 // Search query:
 // - owner: wantedly
 // - state: open
-// - reviewed-by: igsr5
-// - -assignee: igsr5
+// - reviewed-by: sora-ichigo
+// - -assignee: sora-ichigo
 // - -review: approved
-// - -review-requested: igsr5
+// - -review-requested: sora-ichigo
 func searchCommentedReviewPRCommand() (*SearchQueryResponse, error) {
-	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:igsr5+-assignee:igsr5+-review:approved+-review-requested:igsr5")
+	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:sora-ichigo+-assignee:sora-ichigo+-review:approved+-review-requested:sora-ichigo")
 	output, err := cmd.Output()
 
 	var res SearchQueryResponse
@@ -102,7 +102,7 @@ func searchCommentedReviewPRCommand() (*SearchQueryResponse, error) {
 // - review: approved
 // - reviewed-by: @me
 func searchApprovedReviewPRCommand() (*SearchQueryResponse, error) {
-	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:igsr5+-assignee:igsr5+review:approved")
+	cmd := exec.Command("gh", "api", "/search/issues?q=is:open+owner:wantedly+type:pr+reviewed-by:sora-ichigo+-assignee:sora-ichigo+review:approved")
 
 	output, err := cmd.Output()
 

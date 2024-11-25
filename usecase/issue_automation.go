@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	variables "github.com/igsr5/github-project-automation"
-	"github.com/igsr5/github-project-automation/domain"
+	variables "github.com/sora-ichigo/github-project-automation"
+	"github.com/sora-ichigo/github-project-automation/domain"
 )
 
 type issueAutomationImpl struct {

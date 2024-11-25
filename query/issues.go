@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/igsr5/github-project-automation/usecase"
+	"github.com/sora-ichigo/github-project-automation/usecase"
 )
 
 type issueFetcherImpl struct {
@@ -32,7 +32,7 @@ func (f *issueFetcherImpl) MyIssues() ([]usecase.Issue, error) {
 }
 
 // Search query:
-// - assignee:igsr5
+// - assignee:sora-ichigo
 // - is:open
 // - owner:wantedly
 // - type:issue

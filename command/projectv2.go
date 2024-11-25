@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os/exec"
 
-	variables "github.com/igsr5/github-project-automation"
-	usecase "github.com/igsr5/github-project-automation/usecase"
+	variables "github.com/sora-ichigo/github-project-automation"
+	usecase "github.com/sora-ichigo/github-project-automation/usecase"
 )
 
 type Item struct {

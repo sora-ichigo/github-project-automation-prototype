@@ -3,9 +3,9 @@ package usecase_test
 import (
 	"testing"
 
-	variables "github.com/igsr5/github-project-automation"
-	usecase "github.com/igsr5/github-project-automation/usecase"
-	mock_usecase "github.com/igsr5/github-project-automation/usecase/mock"
+	variables "github.com/sora-ichigo/github-project-automation"
+	usecase "github.com/sora-ichigo/github-project-automation/usecase"
+	mock_usecase "github.com/sora-ichigo/github-project-automation/usecase/mock"
 	"go.uber.org/mock/gomock"
 )
 
